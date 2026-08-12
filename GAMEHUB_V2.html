@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#08070d">
+<title>GAMEHUB — Next Level Gaming</title>
+<style>
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:#07070d;color:#f7f5ff;font-family:Arial,Helvetica,sans-serif;overflow-x:hidden}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.05;background:repeating-linear-gradient(0deg,transparent 0 3px,#fff 4px);z-index:20}
+a{text-decoration:none;color:inherit}button,input{font:inherit}.nav{height:78px;padding:0 6vw;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #ffffff13;background:#08070de8;backdrop-filter:blur(16px);position:sticky;top:0;z-index:15}.logo{font-weight:900;font-size:24px;letter-spacing:-1.5px}.logo i{font-style:normal;color:#b652ff;text-shadow:0 0 20px #b652ff}.navlinks{display:flex;gap:30px;color:#aaa6bb;font-size:12px;font-weight:800;letter-spacing:1.3px}.navlinks a:hover{color:#fff}.profile{border:1px solid #ffffff1b;background:#ffffff08;color:#fff;border-radius:8px;padding:11px 14px;font-size:11px;font-weight:800}.menu{display:none;border:1px solid #ffffff18;background:#111018;color:#fff;border-radius:10px;padding:11px 15px;font-size:22px}
+.hero{min-height:650px;padding:70px 7vw 50px;display:grid;grid-template-columns:1.1fr .9fr;align-items:center;position:relative;overflow:hidden;background:radial-gradient(circle at 78% 65%,#a13aff22,transparent 27%),radial-gradient(circle at 15% 20%,#00d9ff12,transparent 25%)}.hero h1{font-size:clamp(52px,7vw,92px);line-height:.9;letter-spacing:-5px;margin:0;font-weight:900}.hero h1 span{color:#b652ff;text-shadow:0 0 30px #b652ff55}.eyebrow{font-size:11px;letter-spacing:3px;color:#65e6ff;font-weight:900;margin:0 0 20px}.sub{max-width:520px;color:#aaa7bc;font-size:18px;line-height:1.6;margin:28px 0}.actions{display:flex;gap:12px;flex-wrap:wrap}.btn{padding:17px 23px;border-radius:9px;font-size:12px;font-weight:900;letter-spacing:1px}.primary{background:#b652ff;color:#09070e;box-shadow:0 0 35px #b652ff33}.secondary{border:1px solid #ffffff1d}.stats{display:flex;gap:45px;margin-top:48px}.stats strong{font-size:24px}.stats small{display:block;color:#666276;font-size:9px;letter-spacing:2px;margin-top:7px}.orb{width:380px;height:380px;border-radius:50%;margin:auto;background:radial-gradient(circle at 37% 35%,#7ff8ff 0,#9b67ff 16%,#9c22ff 38%,#21113d 66%,transparent 67%);filter:drop-shadow(0 0 60px #982cff88);animation:float 5s ease-in-out infinite}.hero-art{position:relative}.hero-tag{position:absolute;right:4%;bottom:8%;padding:20px 22px;width:240px;background:#0e0c17dc;border:1px solid #ffffff1c;backdrop-filter:blur(10px)}.hero-tag small{color:#65e6ff;letter-spacing:2px}.hero-tag h2{font-size:25px;margin:10px 0}.section{padding:80px 7vw}.sectionhead{display:flex;justify-content:space-between;align-items:end;margin-bottom:28px}.sectionhead h2{font-size:38px;margin:0}.sectionhead h2 span{color:#b652ff}.viewall{font-size:11px;font-weight:900;letter-spacing:1.5px;color:#a8a4b7}
+.toolbar{display:flex;gap:10px;margin-bottom:25px;flex-wrap:wrap}.search{flex:1;min-width:220px;background:#0d0c14;border:1px solid #ffffff14;border-radius:9px;padding:14px 16px;color:#fff;outline:none}.search:focus{border-color:#b652ff66}.filter{border:1px solid #ffffff15;background:#0d0c14;color:#aaa6b9;border-radius:9px;padding:0 16px;font-size:11px;font-weight:800}.filter.active{background:#b652ff;color:#08070d}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}.game{min-height:390px;border:1px solid #ffffff12;border-radius:13px;overflow:hidden;position:relative;background:#10101a;transition:.25s}.game:hover{transform:translateY(-5px);border-color:#b652ff55;box-shadow:0 15px 50px #0008}.cover{height:255px;position:relative;overflow:hidden}.cover:before{content:"";position:absolute;inset:-20%;background:linear-gradient(125deg,transparent 20%,#ffffff19 21% 23%,transparent 24% 48%,#ffffff0b 49% 51%,transparent 52%);transform:rotate(7deg)}.cover.one{background:radial-gradient(circle at 30% 35%,#ff6dca,#7e1cff 28%,#11102a 70%)}.cover.two{background:radial-gradient(circle at 70% 30%,#5cf7ff,#075a88 30%,#08111d 70%)}.cover.three{background:radial-gradient(circle at 50% 45%,#ff9a4d,#8d1649 30%,#120d1b 72%)}.cover.four{background:radial-gradient(circle at 35% 35%,#c5ff69,#216d50 28%,#0a1212 72%)}.cover.five{background:radial-gradient(circle at 70% 35%,#a977ff,#34217c 30%,#0d0a18 72%)}.cover.six{background:radial-gradient(circle at 40% 45%,#ffe16b,#a33a13 30%,#130d0b 72%)}.cover b{position:absolute;left:20px;bottom:17px;font-size:27px;letter-spacing:-1px}.gamebody{padding:18px}.gamebody small{color:#65e6ff;font-size:9px;letter-spacing:2px;font-weight:900}.gamebody h3{margin:8px 0;font-size:20px}.gamebody p{color:#777287;font-size:12px;margin:0 0 16px}.gamebody button{border:0;background:none;color:#fff;font-size:11px;font-weight:900;letter-spacing:1px;padding:0;cursor:pointer}
+.categories{background:#090811}.catrow{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.cat{padding:24px;border:1px solid #ffffff12;background:#0e0d16;border-radius:10px;color:#fff;text-align:left;font-weight:900}.cat:hover{border-color:#b652ff55}.cat span{display:block;color:#6e6a7c;font-size:10px;margin-top:8px}
+.news{border-top:1px solid #ffffff0d}.newsitem{display:grid;grid-template-columns:150px 1fr 30px;gap:25px;padding:23px 0;border-bottom:1px solid #ffffff12}.newsitem .date{color:#6c687b;font-size:9px;letter-spacing:2px}.newsitem h3{margin:0 0 7px;font-size:17px}.newsitem p{margin:0;color:#777287;font-size:12px}.newsitem b{color:#b652ff}
+footer{padding:35px 7vw;border-top:1px solid #ffffff12;display:flex;justify-content:space-between;color:#666276;font-size:10px;letter-spacing:1.5px}
+.modal{position:fixed;inset:0;background:#000b;display:none;align-items:center;justify-content:center;padding:20px;z-index:30}.modal.show{display:flex}.modalbox{max-width:560px;width:100%;background:#100e19;border:1px solid #ffffff20;border-radius:16px;overflow:hidden;box-shadow:0 30px 100px #000}.modalcover{height:230px;background:radial-gradient(circle at 50% 35%,#b652ff,#21123e 38%,#08070d 75%);padding:25px;display:flex;align-items:end}.modalcover h2{font-size:38px;margin:0}.modalcontent{padding:24px}.modalcontent p{color:#aaa6b9;line-height:1.6}.close{float:right;border:1px solid #ffffff18;background:#ffffff08;color:#fff;border-radius:8px;padding:7px 11px}
+@keyframes float{50%{transform:translateY(-15px) rotate(2deg)}}@media(max-width:800px){.navlinks,.profile{display:none}.menu{display:block}.nav{height:72px}.navlinks.open{display:flex;position:absolute;top:72px;left:0;right:0;padding:20px 7vw;background:#0b0a11;flex-direction:column;border-bottom:1px solid #ffffff12}.hero{grid-template-columns:1fr;padding:70px 6vw 30px}.hero h1{letter-spacing:-3px}.hero-art{height:350px}.orb{width:300px;height:300px}.hero-tag{right:0;bottom:10px}.grid{grid-template-columns:1fr}.catrow{grid-template-columns:1fr 1fr}.section{padding:65px 6vw}.sectionhead h2{font-size:29px}.stats{gap:25px}.newsitem{grid-template-columns:1fr 20px}.date{display:none}footer{flex-direction:column;gap:15px}}
+</style>
+</head>
+<body>
+<header class="nav">
+<a class="logo" href="#"><i>G</i>AMEHUB</a>
+<nav class="navlinks" id="navlinks"><a href="#games">GAMES</a><a href="#categories">CATEGORIES</a><a href="#news">NEWS</a></nav>
+<button class="profile">PLAYER 01</button><button class="menu" id="menu">☰</button>
+</header>
+
+<section class="hero">
+<div>
+<p class="eyebrow">✦ THE NEXT LEVEL STARTS HERE</p>
+<h1>PLAY.<br><span>DISCOVER.</span><br>DOMINATE.</h1>
+<p class="sub">Your digital arena for discovering the games everyone is talking about.</p>
+<div class="actions"><a class="btn primary" href="#games">EXPLORE GAMES ↗</a><a class="btn secondary" href="#news">LATEST NEWS</a></div>
+<div class="stats"><div><strong>2.4M</strong><small>PLAYERS</small></div><div><strong>8.7K</strong><small>GAMES</small></div><div><strong>24/7</strong><small>COMMUNITY</small></div></div>
+</div>
+<div class="hero-art"><div class="orb"></div><div class="hero-tag"><small>FEATURED // 01</small><h2>NEON FRONTIER</h2><span>THE CITY NEVER SLEEPS.</span></div></div>
+</section>
+
+<section class="section" id="games">
+<div class="sectionhead"><h2>Trending <span>Games</span></h2><a class="viewall" href="#games">VIEW ALL →</a></div>
+<div class="toolbar"><input id="search" class="search" placeholder="Search games..."><button class="filter active" data-cat="all">ALL</button><button class="filter" data-cat="action">ACTION</button><button class="filter" data-cat="rpg">RPG</button><button class="filter" data-cat="fps">FPS</button></div>
+<div class="grid" id="grid"></div>
+</section>
+
+<section class="section categories" id="categories">
+<div class="sectionhead"><h2>Pick Your <span>World</span></h2></div>
+<div class="catrow"><button class="cat" data-jump="action">⚡ ACTION<span>124 games</span></button><button class="cat" data-jump="rpg">◈ RPG<span>86 games</span></button><button class="cat" data-jump="fps">✦ FPS<span>51 games</span></button><button class="cat" data-jump="all">⌁ ADVENTURE<span>73 games</span></button></div>
+</section>
+
+<section class="section news" id="news">
+<div class="sectionhead"><h2>Latest <span>News</span></h2></div>
+<div class="newsitem"><div class="date">AUG 08 / 2026</div><div><h3>The biggest releases landing this month</h3><p>Five new worlds worth keeping on your radar.</p></div><b>↗</b></div>
+<div class="newsitem"><div class="date">AUG 05 / 2026</div><div><h3>How indie studios are redefining the genre</h3><p>Fresh ideas, bold mechanics and smaller teams.</p></div><b>↗</b></div>
+<div class="newsitem"><div class="date">AUG 01 / 2026</div><div><h3>GAMEHUB community picks of the week</h3><p>The players have spoken. Here are the favorites.</p></div><b>↗</b></div>
+</section>
+
+<footer><strong class="logo"><i>G</i>AMEHUB</strong><span>PLAY MORE. DISCOVER MORE.</span><span>© 2026 GAMEHUB</span></footer>
+
+<div class="modal" id="modal"><div class="modalbox"><div class="modalcover"><button class="close" id="close">✕</button><h2 id="modalTitle">NEON FRONTIER</h2></div><div class="modalcontent"><small id="modalCat"></small><p id="modalText"></p><a class="btn primary" href="#games" id="modalBtn">BACK TO GAMES</a></div></div></div>
+
+<script>
+const games=[
+{name:"NEON FRONTIER",cat:"action",type:"ACTION / RPG",cover:"one",text:"A neon-soaked action RPG where every district hides a new challenge."},
+{name:"VOID RUNNER",cat:"fps",type:"SCI-FI / FPS",cover:"two",text:"Sprint through hostile worlds, master futuristic weapons and survive the void."},
+{name:"BLACK PROTOCOL",cat:"fps",type:"TACTICAL / FPS",cover:"three",text:"A tactical shooter built around precision, teamwork and fast decisions."},
+{name:"WILD SIGNAL",cat:"rpg",type:"RPG / ADVENTURE",cover:"four",text:"Explore a mysterious green world filled with strange signals and hidden paths."},
+{name:"NOVA ZERO",cat:"rpg",type:"RPG / SCI-FI",cover:"five",text:"Build your crew, discover lost technology and shape the future of a distant colony."},
+{name:"SOLAR STRIKE",cat:"action",type:"ACTION / ARCADE",cover:"six",text:"Fast arcade combat, giant arenas and high-energy battles from sunrise to shutdown."}
+];
+const grid=document.getElementById("grid"),search=document.getElementById("search"),filters=[...document.querySelectorAll(".filter")];
+function render(cat="all"){
+ const q=search.value.toLowerCase().trim();
+ grid.innerHTML=games.filter(g=>(cat==="all"||g.cat===cat)&&g.name.toLowerCase().includes(q)).map((g,i)=>`
+ <article class="game"><div class="cover ${g.cover}"><b>${g.name}</b></div><div class="gamebody"><small>${g.type}</small><h3>${g.name}</h3><p>${g.text}</p><button onclick="openGame(${i})">VIEW GAME →</button></div></article>`).join("")||"<p style='color:#777'>No games found.</p>";
+}
+let current="all";render();
+filters.forEach(f=>f.onclick=()=>{filters.forEach(x=>x.classList.remove("active"));f.classList.add("active");current=f.dataset.cat;render(current)});
+search.oninput=()=>render(current);
+document.querySelectorAll(".cat").forEach(c=>c.onclick=()=>{current=c.dataset.jump;filters.forEach(x=>x.classList.toggle("active",x.dataset.cat===current));render(current);location.hash="games"});
+const modal=document.getElementById("modal");
+function openGame(i){const g=games[i];document.getElementById("modalTitle").textContent=g.name;document.getElementById("modalCat").textContent=g.type;document.getElementById("modalText").textContent=g.text;modal.classList.add("show")}
+document.getElementById("close").onclick=()=>modal.classList.remove("show");
+modal.onclick=e=>{if(e.target===modal)modal.classList.remove("show")};
+document.getElementById("menu").onclick=()=>document.getElementById("navlinks").classList.toggle("open");
+document.querySelectorAll(".navlinks a").forEach(a=>a.onclick=()=>document.getElementById("navlinks").classList.remove("open"));
+</script>
+</body>
+</html>
