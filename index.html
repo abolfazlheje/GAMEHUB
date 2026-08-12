@@ -1,1 +1,203 @@
-<!doctype html><html lang="fa" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#08080d"><title>GAMEHUB — Enter the Next Level</title><link rel="stylesheet" href="style.css"></head><body><header class="topbar"><div class="logo">GAME<span>HUB</span></div><button class="menu" id="menuBtn">☰</button><nav id="nav"><a href="#games">بازی‌ها</a><a href="#categories">دسته‌بندی</a><a href="#news">اخبار</a><a href="#account">حساب کاربری</a></nav></header><main><section class="hero"><p class="eyebrow">✦ THE NEXT LEVEL STARTS HERE</p><h1>PLAY.<br><b>DISCOVER.</b><br>DOMINATE.</h1><p class="lead">مرکز گیمینگ تو برای پیدا کردن بازی‌های محبوب، اخبار و تجربه‌های جدید.</p><div class="actions"><a class="primary" href="#games">مشاهده بازی‌ها ↗</a><a class="secondary" href="#news">آخرین اخبار</a></div><div class="stats"><div><strong>2.4M</strong><small>PLAYERS</small></div><div><strong>8.7K</strong><small>GAMES</small></div><div><strong>24/7</strong><small>COMMUNITY</small></div></div></section><section id="games" class="section"><div class="section-head"><div><p class="eyebrow">FEATURED // 01</p><h2>بازی‌های محبوب</h2></div><input id="search" type="search" placeholder="جستجوی بازی..."></div><div id="gameGrid" class="grid"></div></section><section id="categories" class="section"><p class="eyebrow">EXPLORE</p><h2>دسته‌بندی‌ها</h2><div class="chips"><button data-filter="همه">همه</button><button data-filter="Action">Action</button><button data-filter="RPG">RPG</button><button data-filter="FPS">FPS</button><button data-filter="Adventure">Adventure</button></div></section><section id="news" class="section panel"><p class="eyebrow">LATEST NEWS</p><h2>اخبار گیمینگ</h2><p>این بخش در مرحله بعد به منبع اخبار آنلاین وصل می‌شود.</p></section><section id="account" class="section panel"><p class="eyebrow">PLAYER PROFILE</p><h2>حساب کاربری</h2><p>ثبت‌نام، ورود و Favorites را در مرحله بعد به دیتابیس وصل می‌کنیم.</p><button class="primary" id="loginDemo">ورود / ثبت‌نام</button></section></main><footer>GAMEHUB © 2026 — ساخته‌شده برای گیمرها 🎮</footer><script src="script.js"></script></body></html>
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#08080d">
+<title>GAMEHUB — Enter the Next Level</title>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header class="topbar">
+  <div class="logo">GAME<span>HUB</span></div>
+
+  <button class="menu" id="menuBtn">☰</button>
+
+  <nav id="nav">
+    <a href="#games">بازی‌ها</a>
+    <a href="#categories">دسته‌بندی</a>
+    <a href="#news">اخبار</a>
+    <a href="#account">حساب کاربری</a>
+  </nav>
+</header>
+
+<main>
+
+<section class="hero">
+  <p class="eyebrow">✦ THE NEXT LEVEL STARTS HERE</p>
+
+  <h1>
+    PLAY.<br>
+    <b>DISCOVER.</b><br>
+    DOMINATE.
+  </h1>
+
+  <p class="lead">
+    مرکز گیمینگ تو برای پیدا کردن بازی‌های محبوب، اخبار و تجربه‌های جدید.
+  </p>
+
+  <div class="actions">
+    <a class="primary" href="#games">مشاهده بازی‌ها ↗</a>
+    <a class="secondary" href="#news">آخرین اخبار</a>
+  </div>
+
+  <div class="stats">
+    <div>
+      <strong>2.4M</strong>
+      <small>PLAYERS</small>
+    </div>
+
+    <div>
+      <strong>8.7K</strong>
+      <small>GAMES</small>
+    </div>
+
+    <div>
+      <strong>24/7</strong>
+      <small>COMMUNITY</small>
+    </div>
+  </div>
+</section>
+
+
+<!-- GAME MENU -->
+<section id="games" class="section">
+
+  <div class="section-head">
+    <div>
+      <p class="eyebrow">FEATURED // 01</p>
+      <h2>منوی بازی‌ها 🎮</h2>
+    </div>
+
+    <input
+      id="search"
+      type="search"
+      placeholder="جستجوی بازی..."
+    >
+  </div>
+
+  <div id="gameGrid" class="grid">
+
+    <div class="game-card" data-category="Action">
+      <h3>Grand Theft Auto V</h3>
+      <p>Action</p>
+      <button>مشاهده بازی</button>
+    </div>
+
+    <div class="game-card" data-category="FPS">
+      <h3>Call of Duty</h3>
+      <p>FPS</p>
+      <button>مشاهده بازی</button>
+    </div>
+
+    <div class="game-card" data-category="RPG">
+      <h3>Minecraft</h3>
+      <p>RPG</p>
+      <button>مشاهده بازی</button>
+    </div>
+
+    <div class="game-card" data-category="Adventure">
+      <h3>Red Dead Redemption 2</h3>
+      <p>Adventure</p>
+      <button>مشاهده بازی</button>
+    </div>
+
+    <div class="game-card" data-category="Action">
+      <h3>Fortnite</h3>
+      <p>Action</p>
+      <button>مشاهده بازی</button>
+    </div>
+
+    <div class="game-card" data-category="FPS">
+      <h3>Counter-Strike 2</h3>
+      <p>FPS</p>
+      <button>مشاهده بازی</button>
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- CATEGORIES -->
+<section id="categories" class="section">
+
+  <p class="eyebrow">EXPLORE</p>
+  <h2>دسته‌بندی‌ها</h2>
+
+  <div class="chips">
+    <button data-filter="همه">همه</button>
+    <button data-filter="Action">Action</button>
+    <button data-filter="RPG">RPG</button>
+    <button data-filter="FPS">FPS</button>
+    <button data-filter="Adventure">Adventure</button>
+  </div>
+
+</section>
+
+
+<section id="news" class="section panel">
+  <p class="eyebrow">LATEST NEWS</p>
+  <h2>اخبار گیمینگ</h2>
+  <p>این بخش در مرحله بعد به منبع اخبار آنلاین وصل می‌شود.</p>
+</section>
+
+
+<section id="account" class="section panel">
+  <p class="eyebrow">PLAYER PROFILE</p>
+  <h2>حساب کاربری</h2>
+  <p>ثبت‌نام، ورود و Favorites را در مرحله بعد به دیتابیس وصل می‌کنیم.</p>
+
+  <button class="primary" id="loginDemo">
+    ورود / ثبت‌نام
+  </button>
+</section>
+
+</main>
+
+
+<footer>
+GAMEHUB © 2026 — ساخته‌شده برای گیمرها 🎮
+</footer>
+
+
+<script>
+const search = document.getElementById("search");
+const cards = document.querySelectorAll(".game-card");
+const filters = document.querySelectorAll("[data-filter]");
+
+search.addEventListener("input", function () {
+  const text = this.value.toLowerCase();
+
+  cards.forEach(card => {
+    const name = card.querySelector("h3").textContent.toLowerCase();
+
+    card.style.display =
+      name.includes(text) ? "" : "none";
+  });
+});
+
+filters.forEach(button => {
+  button.addEventListener("click", function () {
+
+    const filter = this.dataset.filter;
+
+    cards.forEach(card => {
+
+      if (filter === "همه") {
+        card.style.display = "";
+      } else {
+        card.style.display =
+          card.dataset.category === filter ? "" : "none";
+      }
+
+    });
+
+  });
+});
+</script>
+
+</body>
+</html>
