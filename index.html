@@ -3,35 +3,29 @@
 
 <head>
   <meta charset="UTF-8">
-
-  <meta name="viewport"
-        content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <meta name="theme-color" content="#08080d">
 
-  <title>GAMEHUB — Enter the Next Level</title>
+  <title>GAMEHUB - مرکز گیمینگ</title>
 
   <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-  <!-- ================= HEADER ================= -->
-
+  <!-- نوار بالای سایت -->
   <header class="topbar">
 
     <div class="logo">
       GAME<span>HUB</span>
     </div>
 
-    <button
-      class="menu"
-      id="menuBtn"
-      type="button"
-      aria-label="باز کردن منو">
+    <button class="menu" id="menuBtn" aria-label="منو">
       ☰
     </button>
 
+    <!-- منوی سایت -->
     <nav id="nav">
 
       <a href="#home">خانه</a>
@@ -40,20 +34,18 @@
 
       <a href="#news">اخبار</a>
 
-      <a href="#profile">حساب کاربری</a>
+      <a href="#account">حساب کاربری</a>
 
     </nav>
 
   </header>
 
 
-  <!-- ================= MAIN ================= -->
+  <main>
 
-  <main id="home">
+    <!-- ================= خانه ================= -->
 
-    <!-- HERO -->
-
-    <section class="hero">
+    <section class="hero" id="home">
 
       <div class="hero-content">
 
@@ -74,36 +66,33 @@
 
         <div class="hero-buttons">
 
-          <a href="#games" class="primary-btn">
+          <a href="#games" class="main-btn">
             مشاهده بازی‌ها ↗
           </a>
 
-          <a href="#news" class="secondary-btn">
+          <a href="#news" class="second-btn">
             آخرین اخبار
           </a>
 
         </div>
 
-      </div>
+        <div class="stats">
 
+          <div>
+            <strong>2.4M</strong>
+            <span>PLAYERS</span>
+          </div>
 
-      <!-- STATS -->
+          <div>
+            <strong>8.7K</strong>
+            <span>GAMES</span>
+          </div>
 
-      <div class="stats">
+          <div>
+            <strong>24/7</strong>
+            <span>COMMUNITY</span>
+          </div>
 
-        <div class="stat">
-          <strong>2.4M</strong>
-          <span>PLAYERS</span>
-        </div>
-
-        <div class="stat">
-          <strong>8.7K</strong>
-          <span>GAMES</span>
-        </div>
-
-        <div class="stat">
-          <strong>24/7</strong>
-          <span>COMMUNITY</span>
         </div>
 
       </div>
@@ -111,78 +100,160 @@
     </section>
 
 
-    <!-- ================= GAMES ================= -->
+    <!-- ================= بازی‌ها ================= -->
 
-    <section id="games" class="section">
+    <section class="games-section" id="games">
 
       <div class="section-title">
 
-        <span>FEATURED // 01</span>
+        <p class="eyebrow">
+          FEATURED // 01
+        </p>
 
         <h2>
           🎮 منوی بازی‌ها
         </h2>
 
         <p>
-          بازی مورد علاقه‌ات را پیدا کن و وارد دنیای گیم شو.
+          بازی مورد علاقه‌ات را انتخاب کن.
         </p>
 
       </div>
 
 
-      <!-- FILTER BUTTONS -->
+      <!-- فیلتر بازی‌ها -->
 
-      <div class="filters">
+      <div class="filters" id="filterButtons">
 
-        <button
-          class="filter-btn active"
-          data-genre="all"
-          type="button">
+        <button class="active" data-filter="all">
           همه
         </button>
 
-        <button
-          class="filter-btn"
-          data-genre="RPG"
-          type="button">
+        <button data-filter="RPG">
           RPG
         </button>
 
-        <button
-          class="filter-btn"
-          data-genre="FPS"
-          type="button">
+        <button data-filter="FPS">
           FPS
         </button>
 
-        <button
-          class="filter-btn"
-          data-genre="Adventure"
-          type="button">
+        <button data-filter="Adventure">
           Adventure
         </button>
 
       </div>
 
 
-      <!-- GAME LIST -->
+      <!-- محل نمایش بازی‌ها -->
 
-      <div id="gamesContainer" class="games-grid">
+      <div class="games-grid" id="gamesList">
 
-        <!-- بازی‌ها توسط script.js ساخته می‌شوند -->
+        <!-- Cyberpunk -->
+
+        <article class="game-card">
+
+          <div class="game-icon">
+            🎮
+          </div>
+
+          <div class="game-info">
+
+            <h3>
+              Cyberpunk 2077
+            </h3>
+
+            <span class="genre">
+              RPG
+            </span>
+
+            <p>
+              یک ماجراجویی آینده‌نگرانه در شهری پر از فناوری و اتفاقات هیجان‌انگیز.
+            </p>
+
+            <div class="rating">
+              ⭐ 9.2
+            </div>
+
+          </div>
+
+        </article>
+
+
+        <!-- Call of Duty -->
+
+        <article class="game-card">
+
+          <div class="game-icon">
+            🎯
+          </div>
+
+          <div class="game-info">
+
+            <h3>
+              Call of Duty
+            </h3>
+
+            <span class="genre">
+              FPS
+            </span>
+
+            <p>
+              وارد میدان نبرد شو و مهارت‌های خودت را به نمایش بگذار.
+            </p>
+
+            <div class="rating">
+              ⭐ 8.9
+            </div>
+
+          </div>
+
+        </article>
+
+
+        <!-- Minecraft -->
+
+        <article class="game-card">
+
+          <div class="game-icon">
+            ⛏️
+          </div>
+
+          <div class="game-info">
+
+            <h3>
+              Minecraft
+            </h3>
+
+            <span class="genre">
+              Adventure
+            </span>
+
+            <p>
+              دنیای خودت را بساز، کشف کن و ماجراجویی‌های جدید تجربه کن.
+            </p>
+
+            <div class="rating">
+              ⭐ 9.5
+            </div>
+
+          </div>
+
+        </article>
 
       </div>
 
     </section>
 
 
-    <!-- ================= NEWS ================= -->
+    <!-- ================= اخبار ================= -->
 
-    <section id="news" class="section">
+    <section class="info-section" id="news">
 
-      <div class="section-title">
+      <div class="info-card">
 
-        <span>LATEST NEWS</span>
+        <p class="eyebrow">
+          LATEST NEWS
+        </p>
 
         <h2>
           اخبار گیمینگ
@@ -194,69 +265,51 @@
 
       </div>
 
-      <div class="news-card">
-
-        <h3>
-          🎮 اخبار و اتفاقات دنیای بازی
-        </h3>
-
-        <p>
-          جدیدترین اخبار، معرفی بازی‌ها و اتفاقات دنیای گیم
-          در این بخش قرار می‌گیرند.
-        </p>
-
-      </div>
-
     </section>
 
 
-    <!-- ================= PROFILE ================= -->
+    <!-- ================= حساب کاربری ================= -->
 
-    <section id="profile" class="section profile-section">
+    <section class="info-section" id="account">
 
-      <div class="section-title">
+      <div class="info-card">
 
-        <span>PLAYER PROFILE</span>
+        <p class="eyebrow">
+          PLAYER PROFILE
+        </p>
 
         <h2>
           حساب کاربری
         </h2>
 
         <p>
-          ثبت‌نام، ورود و Favorites را در مرحله بعد
-          به دیتابیس وصل می‌کنیم.
+          ثبت‌نام، ورود و Favorites را در مرحله بعد به دیتابیس وصل می‌کنیم.
         </p>
 
+        <button class="main-btn" id="loginDemo">
+          ورود / ثبت‌نام
+        </button>
+
       </div>
-
-
-      <button
-        id="loginDemo"
-        class="primary-btn"
-        type="button">
-
-        ورود / ثبت‌نام
-
-      </button>
 
     </section>
 
   </main>
 
 
-  <!-- ================= FOOTER ================= -->
+  <!-- ================= فوتر ================= -->
 
   <footer>
 
-    <p>
-      🎮 GAMEHUB © 2026 — ساخته‌شده برای گیمرها
-    </p>
+    🎮 GAMEHUB © 2026
+    <br>
+
+    ساخته‌شده برای گیمرها
 
   </footer>
 
 
-  <!-- ================= JAVASCRIPT ================= -->
-
+  <!-- فایل جاوااسکریپت -->
   <script src="script.js"></script>
 
 </body>
