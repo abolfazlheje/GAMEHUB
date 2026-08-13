@@ -254,3 +254,4 @@ document.addEventListener("keydown", (event) => {
   }
 
 }); 
+console.log("GAMEHUB SCRIPT NEW VERSION");
