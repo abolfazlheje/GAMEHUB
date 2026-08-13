@@ -866,3 +866,14 @@
 
 </body>
           </html>
+document.querySelectorAll(".game-card").forEach((card) => {
+  card.addEventListener("click", () => {
+    const title = card.querySelector("h3")?.textContent.trim();
+
+    if (title) {
+      alert("🎮 " + title + "\n\nصفحه این بازی به‌زودی آماده می‌شود!");
+    }
+  });
+
+  card.style.cursor = "pointer";
+});
