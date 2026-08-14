@@ -1,1492 +1,835 @@
+```html
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
-
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <title>GAMEHUB - مرکز گیمینگ</title>
-
-  <style>
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
-    body {
-      background: #08070d;
-      color: white;
-      font-family: Arial, sans-serif;
-      min-height: 100vh;
-    }
-
-    button,
-    input {
-      font-family: inherit;
-    }
-
-    /* ================= HEADER ================= */
-
-    header {
-      height: 85px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 35px;
-      background: #08070d;
-      border-bottom: 1px solid #211d29;
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-    }
-
-    .logo {
-      font-size: 32px;
-      font-weight: bold;
-    }
-
-    .logo span {
-      color: #a855f7;
-    }
-
-    .menu-button {
-      background: transparent;
-      border: none;
-      color: white;
-      font-size: 38px;
-      cursor: pointer;
-    }
-
-    /* ================= MENU ================= */
-
-    .menu {
-      display: none;
-      position: fixed;
-      top: 85px;
-      right: 0;
-      width: 100%;
-      background: #0b0910;
-      border-bottom: 1px solid #2b2233;
-      z-index: 999;
-    }
-
-    .menu.active {
-      display: block;
-    }
-
-    .menu button {
-      width: 100%;
-      padding: 22px;
-      background: transparent;
-      border: none;
-      border-bottom: 1px solid #211b28;
-      color: #ddd;
-      text-align: right;
-      font-size: 19px;
-      cursor: pointer;
-    }
-
-    .menu button:hover {
-      background: #15101c;
-      color: #a855f7;
-    }
-
-    /* ================= HERO ================= */
-
-    .hero {
-      min-height: 500px;
-      padding: 90px 25px;
-      text-align: center;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      background:
-        radial-gradient(
-          circle at 50% 25%,
-          #291035 0%,
-          #08070d 55%
-        );
-    }
-
-    .hero-small {
-      color: #a855f7;
-      font-size: 18px;
-      margin-bottom: 25px;
-    }
-
-    .hero h1 {
-      font-size: clamp(48px, 10vw, 90px);
-      line-height: 0.95;
-      margin-bottom: 30px;
-      font-weight: 900;
-    }
-
-    .hero h1 span {
-      color: #a855f7;
-    }
-
-    .hero p {
-      max-width: 700px;
-      margin: auto;
-      color: #aaa;
-      font-size: 19px;
-      line-height: 2;
-    }
-
-    .hero-button {
-      margin: 35px auto 0;
-      padding: 15px 30px;
-      border: none;
-      border-radius: 30px;
-      background: #8b35d6;
-      color: white;
-      font-size: 18px;
-      cursor: pointer;
-    }
-
-    .hero-button:hover {
-      background: #a855f7;
-    }
-
-    /* ================= GAMES SECTION ================= */
-
-    #games-section {
-      max-width: 1100px;
-      margin: auto;
-      padding: 70px 25px;
-    }
-
-    .section-title {
-      text-align: center;
-      font-size: 36px;
-      margin-bottom: 15px;
-    }
-
-    .section-title span {
-      color: #a855f7;
-    }
-
-    .section-description {
-      text-align: center;
-      color: #999;
-      font-size: 18px;
-      margin-bottom: 30px;
-    }
-
-    /* ================= SEARCH ================= */
-
-    .search-box {
-      max-width: 650px;
-      margin: 0 auto 35px;
-      position: relative;
-    }
-
-    .search-box input {
-      width: 100%;
-      padding: 17px 22px;
-      border-radius: 16px;
-      border: 1px solid #33263f;
-      background: #100d15;
-      color: white;
-      font-size: 17px;
-      outline: none;
-      text-align: right;
-    }
-
-    .search-box input:focus {
-      border-color: #a855f7;
-      box-shadow: 0 0 20px rgba(168, 85, 247, 0.12);
-    }
-
-    .search-box input::placeholder {
-      color: #777;
-    }
-
-    /* ================= FILTERS ================= */
-
-    .filters {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 12px;
-      margin-bottom: 40px;
-    }
-
-    .filter-button {
-      padding: 12px 23px;
-      border-radius: 30px;
-      border: 1px solid #33263f;
-      background: #0d0b12;
-      color: #aaa;
-      cursor: pointer;
-      font-size: 16px;
-    }
-
-    .filter-button:hover,
-    .filter-button.active {
-      background: #7026a8;
-      color: white;
-      border-color: #a855f7;
-    }
-
-    /* ================= GAMES GRID ================= */
-
-    .games-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 25px;
-    }
-
-    .game-card {
-      background: #100d15;
-      border: 1px solid #241c2c;
-      border-radius: 20px;
-      padding: 25px;
-      cursor: pointer;
-      transition: 0.25s;
-      min-height: 270px;
-    }
-
-    .game-card:hover {
-      transform: translateY(-5px);
-      border-color: #8b35d6;
-      box-shadow:
-        0 10px 40px rgba(139, 53, 214, 0.15);
-    }
-
-    .game-icon {
-      font-size: 55px;
-      margin-bottom: 18px;
-    }
-
-    .game-card h2 {
-      font-size: 25px;
-      margin-bottom: 10px;
-    }
-
-    .game-genre {
-      color: #b967ed;
-      margin-bottom: 15px;
-      display: inline-block;
-    }
-
-    .game-description {
-      color: #aaa;
-      line-height: 1.9;
-      margin-bottom: 18px;
-    }
-
-    .rating {
-      color: #ffd43b;
-      font-size: 18px;
-    }
-
-    .no-results {
-      display: none;
-      text-align: center;
-      color: #999;
-      padding: 50px 20px;
-      font-size: 20px;
-    }
-
-    /* ================= STATS ================= */
-
-    .stats {
-      padding: 70px 20px;
-      background: #0c0a10;
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      text-align: center;
-      gap: 30px;
-    }
-
-    .stat-number {
-      display: block;
-      color: #a855f7;
-      font-size: 35px;
-      font-weight: bold;
-      margin-bottom: 8px;
-    }
-
-    .stat-text {
-      color: #999;
-    }
-
-    /* ================= GAME PAGE ================= */
-
-    .game-page {
-      display: none;
-      position: fixed;
-      inset: 0;
-      z-index: 3000;
-      overflow-y: auto;
-      background:
-        radial-gradient(
-          circle at top,
-          #291035 0%,
-          #08070d 48%
-        );
-      padding: 25px 20px 60px;
-    }
-
-    .game-page.active {
-      display: block;
-    }
-
-    .game-page-inner {
-      max-width: 850px;
-      margin: 30px auto;
-      background: #0e0b13;
-      border: 1px solid #30243a;
-      border-radius: 25px;
-      padding: 35px;
-    }
-
-    .top-game-buttons {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-
-    .close-button,
-    .back-button {
-      padding: 12px 20px;
-      border-radius: 12px;
-      border: 1px solid #4a3557;
-      background: #17111d;
-      color: white;
-      cursor: pointer;
-      font-size: 16px;
-    }
-
-    .close-button:hover,
-    .back-button:hover {
-      background: #7026a8;
-    }
-
-    .game-big-icon {
-      text-align: center;
-      font-size: 90px;
-      margin: 35px 0 20px;
-    }
-
-    .game-page-category {
-      text-align: center;
-      color: #a855f7;
-      font-size: 20px;
-      margin-bottom: 15px;
-    }
-
-    .game-page h1 {
-      text-align: center;
-      font-size: 42px;
-      margin-bottom: 20px;
-    }
-
-    .game-rating {
-      text-align: center;
-      color: #ffd43b;
-      font-size: 25px;
-      margin-bottom: 25px;
-    }
-
-    .game-page-description {
-      color: #ccc;
-      text-align: center;
-      font-size: 19px;
-      line-height: 2;
-      margin-bottom: 30px;
-    }
-
-    .game-info {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 15px;
-      margin-bottom: 30px;
-    }
-
-    .game-info div {
-      background: #151019;
-      border-radius: 15px;
-      padding: 20px;
-      text-align: center;
-    }
-
-    .game-info strong {
-      display: block;
-      color: #a855f7;
-      margin-bottom: 8px;
-    }
-
-    .play-button {
-      width: 100%;
-      padding: 17px;
-      border: none;
-      border-radius: 15px;
-      background: #8b35d6;
-      color: white;
-      font-size: 19px;
-      cursor: pointer;
-      margin-bottom: 15px;
-    }
-
-    .play-button:hover {
-      background: #a855f7;
-    }
-
-    .back-game-button {
-      width: 100%;
-      padding: 15px;
-      border-radius: 15px;
-      border: 1px solid #4a3557;
-      background: transparent;
-      color: white;
-      font-size: 18px;
-      cursor: pointer;
-    }
-
-    .back-game-button:hover {
-      background: #17111d;
-    }
-
-    /* ================= FOOTER ================= */
-
-    footer {
-      text-align: center;
-      padding: 40px 20px;
-      color: #777;
-      border-top: 1px solid #211d29;
-    }
-
-    /* ================= MOBILE ================= */
-
-    @media (max-width: 700px) {
-
-      header {
-        height: 75px;
-        padding: 0 20px;
-      }
-
-      .menu {
-        top: 75px;
-      }
-
-      .logo {
-        font-size: 28px;
-      }
-
-      .hero {
-        min-height: 450px;
-        padding: 70px 20px;
-      }
-
-      .hero h1 {
-        font-size: 50px;
-      }
-
-      .hero p {
-        font-size: 17px;
-      }
-
-      .games-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .game-page-inner {
-        margin: 5px auto;
-        padding: 22px 17px;
-      }
-
-      .game-page h1 {
-        font-size: 32px;
-      }
-
-      .game-info {
-        grid-template-columns: 1fr;
-      }
-
-      .stats {
-        grid-template-columns: 1fr;
-        padding: 50px 20px;
-      }
-    }
-
-  </style>
-
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>GAMEHUB - مرکز گیمینگ</title>
+
+<style>
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background: #08070d;
+  color: white;
+  min-height: 100vh;
+}
+
+header {
+  height: 90px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 6%;
+  border-bottom: 1px solid #25202c;
+}
+
+.logo {
+  font-size: 32px;
+  font-weight: bold;
+  direction: ltr;
+}
+
+.logo span {
+  color: #a64cff;
+}
+
+.menu {
+  font-size: 38px;
+  cursor: pointer;
+}
+
+main {
+  width: 92%;
+  max-width: 1100px;
+  margin: auto;
+}
+
+.hero {
+  text-align: center;
+  padding: 45px 15px 25px;
+}
+
+.hero h1 {
+  font-size: 48px;
+  margin-bottom: 20px;
+}
+
+.hero h1 span {
+  color: #a64cff;
+}
+
+.hero p {
+  color: #aaa;
+  font-size: 22px;
+}
+
+/* SEARCH */
+
+.search-box {
+  margin: 35px auto;
+  max-width: 700px;
+  position: relative;
+}
+
+.search-box input {
+  width: 100%;
+  padding: 20px 60px 20px 20px;
+  border-radius: 35px;
+  border: 1px solid #a64cff;
+  background: #100d16;
+  color: white;
+  font-size: 20px;
+  outline: none;
+  text-align: right;
+}
+
+.search-box input:focus {
+  box-shadow: 0 0 20px rgba(166,76,255,.25);
+}
+
+.search-icon {
+  position: absolute;
+  right: 20px;
+  top: 15px;
+  font-size: 28px;
+}
+
+/* CATEGORIES */
+
+.categories {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  flex-wrap: wrap;
+  margin: 25px 0 40px;
+}
+
+.category {
+  border: 1px solid #30243d;
+  background: #0c0a10;
+  color: #aaa;
+  border-radius: 35px;
+  padding: 15px 30px;
+  font-size: 18px;
+  cursor: pointer;
+  transition: .2s;
+}
+
+.category:hover,
+.category.active {
+  background: #7929b8;
+  border-color: #a64cff;
+  color: white;
+}
+
+/* ADVERTISEMENT PLACE */
+
+.ad-box {
+  max-width: 728px;
+  min-height: 100px;
+  margin: 25px auto 45px;
+  border: 1px dashed #4a3b55;
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #666;
+  font-size: 15px;
+}
+
+.ad-box span {
+  text-align: center;
+}
+
+/* GAMES */
+
+.games {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 25px;
+  padding-bottom: 60px;
+}
+
+.game-card {
+  background: #100d15;
+  border: 1px solid #211a29;
+  border-radius: 20px;
+  padding: 25px;
+  cursor: pointer;
+  transition: .25s;
+}
+
+.game-card:hover {
+  transform: translateY(-5px);
+  border-color: #9d45ef;
+  box-shadow: 0 10px 30px rgba(157,69,239,.12);
+}
+
+.game-icon {
+  font-size: 65px;
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+.game-card h2 {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.genre {
+  color: #b05cff;
+  text-align: center;
+  margin-bottom: 12px;
+}
+
+.description {
+  color: #bbb;
+  line-height: 1.9;
+  text-align: center;
+}
+
+.rating {
+  color: #ffd43b;
+  text-align: center;
+  font-size: 20px;
+  margin-top: 15px;
+}
+
+.no-results {
+  text-align: center;
+  color: #999;
+  font-size: 20px;
+  padding: 40px;
+  display: none;
+}
+
+/* GAME PAGE */
+
+.game-page {
+  position: fixed;
+  inset: 0;
+  background: #09080e;
+  overflow-y: auto;
+  z-index: 9999;
+  padding: 30px 20px 60px;
+}
+
+.game-page-inner {
+  max-width: 700px;
+  margin: auto;
+  text-align: center;
+}
+
+.close-button {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  border: none;
+  background: #241b2b;
+  color: white;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  font-size: 25px;
+  cursor: pointer;
+}
+
+.big-icon {
+  font-size: 90px;
+  margin-top: 30px;
+}
+
+.game-page h1 {
+  font-size: 48px;
+  margin: 20px 0;
+}
+
+.game-page-rating {
+  color: #ffd43b;
+  font-size: 35px;
+  margin: 20px;
+}
+
+.game-description {
+  color: #ccc;
+  font-size: 22px;
+  line-height: 2;
+  margin: 30px 0;
+}
+
+.info-box {
+  background: #130e18;
+  border-radius: 20px;
+  padding: 25px;
+  margin: 20px 0;
+}
+
+.info-box div {
+  padding: 18px;
+  border-bottom: 1px solid #2a202f;
+}
+
+.info-box div:last-child {
+  border-bottom: none;
+}
+
+.info-box strong {
+  color: #a64cff;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.play-button,
+.back-button {
+  width: 100%;
+  padding: 20px;
+  border: none;
+  border-radius: 25px;
+  font-size: 23px;
+  cursor: pointer;
+  margin-top: 15px;
+}
+
+.play-button {
+  background: #a64cff;
+  color: white;
+}
+
+.play-button:hover {
+  background: #8d35d8;
+}
+
+.back-button {
+  background: #211926;
+  color: white;
+}
+
+/* FOOTER */
+
+footer {
+  text-align: center;
+  padding: 30px;
+  border-top: 1px solid #211c26;
+  color: #777;
+}
+
+/* MOBILE */
+
+@media (max-width: 600px) {
+
+  header {
+    height: 75px;
+    padding: 0 20px;
+  }
+
+  .logo {
+    font-size: 25px;
+  }
+
+  .menu {
+    font-size: 32px;
+  }
+
+  .hero {
+    padding-top: 30px;
+  }
+
+  .hero h1 {
+    font-size: 38px;
+  }
+
+  .hero p {
+    font-size: 18px;
+  }
+
+  .category {
+    padding: 13px 23px;
+  }
+
+  .game-page h1 {
+    font-size: 36px;
+  }
+
+  .game-description {
+    font-size: 18px;
+  }
+}
+</style>
 </head>
-
 
 <body>
 
+<header>
+  <div class="logo">GAME<span>HUB</span></div>
+  <div class="menu">☰</div>
+</header>
 
-  <!-- ================= HEADER ================= -->
+<main>
 
-  <header>
+<section class="hero">
+  <h1>بازی‌های <span>محبوب</span></h1>
+  <p>بازی مورد علاقه‌ات را پیدا کن</p>
+</section>
 
-    <button
-      class="menu-button"
-      id="menuButton"
-      type="button"
-    >
-      ☰
-    </button>
+<!-- SEARCH -->
 
-    <div class="logo">
-      GAME<span>HUB</span>
-    </div>
+<div class="search-box">
+  <span class="search-icon">🔎</span>
 
-  </header>
-
-
-  <!-- ================= MENU ================= -->
-
-  <nav
-    class="menu"
-    id="mainMenu"
+  <input
+    id="searchInput"
+    type="text"
+    placeholder="جست‌وجوی بازی..."
+    autocomplete="off"
   >
+</div>
+
+<!-- CATEGORIES -->
+
+<div class="categories">
+
+  <button class="category active" data-category="همه">
+    همه
+  </button>
+
+  <button class="category" data-category="FPS">
+    FPS
+  </button>
+
+  <button class="category" data-category="RPG">
+    RPG
+  </button>
+
+  <button class="category" data-category="Sports">
+    Sports
+  </button>
+
+  <button class="category" data-category="Adventure">
+    Adventure
+  </button>
+
+</div>
+
+<!-- ADVERTISEMENT PLACE -->
+
+<div class="ad-box">
+  <span>
+    جایگاه تبلیغات<br>
+    <small>پس از فعال‌سازی سرویس تبلیغاتی، کد تبلیغ اینجا قرار می‌گیرد.</small>
+  </span>
+</div>
+
+<!-- GAMES -->
+
+<section class="games" id="gamesContainer"></section>
+
+<div class="no-results" id="noResults">
+  بازی موردنظر پیدا نشد 😕
+</div>
+
+</main>
+
+<footer>
+  © 2026 GAMEHUB - مرکز گیمینگ
+</footer>
+
+<script>
+
+const games = [
+
+  {
+    title: "Cyberpunk 2077",
+    genre: "RPG",
+    rating: "9.2",
+    icon: "🎮",
+    description:
+      "یک ماجراجویی آینده‌نگرانه در شهری پر از فناوری و اتفاقات هیجان‌انگیز.",
+    type: "Single Player"
+  },
+
+  {
+    title: "Call of Duty",
+    genre: "FPS",
+    rating: "8.9",
+    icon: "🎯",
+    description:
+      "وارد میدان نبرد شو و مهارت‌های خودت را به نمایش بگذار.",
+    type: "Multiplayer"
+  },
+
+  {
+    title: "Minecraft",
+    genre: "Adventure",
+    rating: "9.0",
+    icon: "⛏️",
+    description:
+      "دنیایی بزرگ برای ساختن، کشف کردن و ماجراجویی.",
+    type: "Single Player / Multiplayer"
+  },
+
+  {
+    title: "FIFA",
+    genre: "Sports",
+    rating: "8.7",
+    icon: "⚽",
+    description:
+      "تیم خودت را بساز و در مسابقات هیجان‌انگیز فوتبال شرکت کن.",
+    type: "Multiplayer"
+  },
+
+  {
+    title: "The Witcher 3",
+    genre: "RPG",
+    rating: "9.5",
+    icon: "⚔️",
+    description:
+      "یک ماجراجویی بزرگ در دنیایی فانتزی و پر از داستان.",
+    type: "Single Player"
+  },
+
+  {
+    title: "Fortnite",
+    genre: "FPS",
+    rating: "8.8",
+    icon: "🔫",
+    description:
+      "در نبردهای آنلاین شرکت کن و برای پیروزی تلاش کن.",
+    type: "Multiplayer"
+  }
+
+];
+
+const gamesContainer =
+  document.getElementById("gamesContainer");
+
+const searchInput =
+  document.getElementById("searchInput");
+
+const noResults =
+  document.getElementById("noResults");
+
+const categoryButtons =
+  document.querySelectorAll(".category");
+
+let selectedCategory = "همه";
+
+
+/* نمایش بازی‌ها */
+
+function renderGames() {
+
+  const searchText =
+    searchInput.value.trim().toLowerCase();
+
+  const filteredGames = games.filter(game => {
+
+    const categoryMatch =
+      selectedCategory === "همه" ||
+      game.genre === selectedCategory;
+
+    const searchMatch =
+      game.title.toLowerCase().includes(searchText) ||
+      game.genre.toLowerCase().includes(searchText);
+
+    return categoryMatch && searchMatch;
+
+  });
+
+  gamesContainer.innerHTML = "";
+
+  if (filteredGames.length === 0) {
+
+    noResults.style.display = "block";
+
+    return;
+  }
+
+  noResults.style.display = "none";
+
+  filteredGames.forEach((game, index) => {
+
+    const originalIndex =
+      games.indexOf(game);
+
+    const card =
+      document.createElement("article");
+
+    card.className = "game-card";
+
+    card.dataset.gameIndex =
+      originalIndex;
+
+    card.innerHTML = `
+
+      <div class="game-icon">
+        ${game.icon}
+      </div>
+
+      <h2>${game.title}</h2>
+
+      <div class="genre">
+        ${game.genre}
+      </div>
+
+      <p class="description">
+        ${game.description}
+      </p>
+
+      <div class="rating">
+        ${game.rating} ⭐
+      </div>
+
+    `;
+
+    gamesContainer.appendChild(card);
+
+  });
+
+}
+
+
+/* جست‌وجو */
+
+searchInput.addEventListener(
+  "input",
+  renderGames
+);
+
+
+/* دسته‌بندی */
+
+categoryButtons.forEach(button => {
+
+  button.addEventListener("click", () => {
+
+    categoryButtons.forEach(btn =>
+      btn.classList.remove("active")
+    );
+
+    button.classList.add("active");
+
+    selectedCategory =
+      button.dataset.category;
+
+    renderGames();
+
+  });
+
+});
+
+
+/* باز کردن صفحه بازی */
+
+gamesContainer.addEventListener(
+  "click",
+  event => {
+
+    const card =
+      event.target.closest(".game-card");
+
+    if (!card) return;
+
+    const index =
+      Number(card.dataset.gameIndex);
+
+    if (
+      Number.isNaN(index) ||
+      !games[index]
+    ) {
+      return;
+    }
+
+    openGamePage(games[index]);
+
+  }
+);
+
+
+/* صفحه اختصاصی بازی */
+
+function openGamePage(game) {
+
+  const oldPage =
+    document.getElementById("gamePage");
+
+  if (oldPage) {
+    oldPage.remove();
+  }
+
+  const page =
+    document.createElement("div");
+
+  page.className = "game-page";
+  page.id = "gamePage";
+
+  page.innerHTML = `
 
     <button
-      type="button"
-      id="homeButton"
-    >
-      خانه
+      class="close-button"
+      id="closeGame">
+      ✕
     </button>
-
-    <button
-      type="button"
-      id="gamesButton"
-    >
-      بازی‌ها
-    </button>
-
-    <button
-      type="button"
-      id="newsButton"
-    >
-      اخبار
-    </button>
-
-    <button
-      type="button"
-      id="accountButton"
-    >
-      حساب کاربری
-    </button>
-
-  </nav>
-
-
-  <!-- ================= HERO ================= -->
-
-  <section
-    class="hero"
-    id="home"
-  >
-
-    <div class="hero-small">
-      ✦ THE NEXT LEVEL STARTS HERE
-    </div>
-
-    <h1>
-      DISCOVER.<br>
-      <span>DOMINATE.</span>
-    </h1>
-
-    <p>
-      مرکز گیمینگ تو برای پیدا کردن بازی‌های محبوب،
-      اخبار و تجربه‌های جدید.
-    </p>
-
-    <button
-      class="hero-button"
-      id="heroGamesButton"
-      type="button"
-    >
-      مشاهده بازی‌ها 🎮
-    </button>
-
-  </section>
-
-
-  <!-- ================= GAMES ================= -->
-
-  <section id="games-section">
-
-    <h2 class="section-title">
-      بازی‌های <span>محبوب</span>
-    </h2>
-
-    <p class="section-description">
-      بازی مورد علاقه‌ات را پیدا کن
-    </p>
-
-
-    <!-- SEARCH -->
-
-    <div class="search-box">
-
-      <input
-        id="searchInput"
-        type="search"
-        placeholder="🔎 جستجوی بازی..."
-        autocomplete="off"
-      >
-
-    </div>
-
-
-    <!-- FILTERS -->
-
-    <div class="filters">
-
-      <button
-        class="filter-button active"
-        data-genre="همه"
-        type="button"
-      >
-        همه
-      </button>
-
-      <button
-        class="filter-button"
-        data-genre="RPG"
-        type="button"
-      >
-        RPG
-      </button>
-
-      <button
-        class="filter-button"
-        data-genre="FPS"
-        type="button"
-      >
-        FPS
-      </button>
-
-      <button
-        class="filter-button"
-        data-genre="Adventure"
-        type="button"
-      >
-        Adventure
-      </button>
-
-      <button
-        class="filter-button"
-        data-genre="Sports"
-        type="button"
-      >
-        Sports
-      </button>
-
-    </div>
-
-
-    <!-- GAMES -->
-
-    <div
-      class="games-grid"
-      id="gamesGrid"
-    ></div>
-
-
-    <div
-      class="no-results"
-      id="noResults"
-    >
-      😕 بازی‌ای پیدا نشد.
-    </div>
-
-  </section>
-
-
-  <!-- ================= STATS ================= -->
-
-  <section class="stats">
-
-    <div>
-
-      <span class="stat-number">
-        2.4M
-      </span>
-
-      <span class="stat-text">
-        PLAYERS
-      </span>
-
-    </div>
-
-
-    <div>
-
-      <span class="stat-number">
-        8.7K
-      </span>
-
-      <span class="stat-text">
-        GAMES
-      </span>
-
-    </div>
-
-
-    <div>
-
-      <span class="stat-number">
-        24/7
-      </span>
-
-      <span class="stat-text">
-        COMMUNITY
-      </span>
-
-    </div>
-
-  </section>
-
-
-  <!-- ================= FOOTER ================= -->
-
-  <footer>
-
-    GAMEHUB © 2026 🎮
-
-  </footer>
-
-
-  <!-- ================= GAME PAGE ================= -->
-
-  <div
-    class="game-page"
-    id="gamePage"
-  >
 
     <div class="game-page-inner">
 
-
-      <div class="top-game-buttons">
-
-        <button
-          class="close-button"
-          id="closeGame"
-          type="button"
-        >
-          ✕ بستن
-        </button>
-
-        <button
-          class="back-button"
-          id="backGame"
-          type="button"
-        >
-          ← بازگشت
-        </button>
-
+      <div class="big-icon">
+        ${game.icon}
       </div>
 
-
-      <div
-        class="game-big-icon"
-        id="gameBigIcon"
-      >
-        🎮
-      </div>
-
-
-      <div
-        class="game-page-category"
-        id="gameCategory"
-      >
-        RPG
-      </div>
-
-
-      <h1 id="gameTitle">
-        Cyberpunk 2077
+      <h1>
+        ${game.title}
       </h1>
 
-
-      <div
-        class="game-rating"
-        id="gameRating"
-      >
-        ⭐ 9.2 / 10
+      <div class="game-page-rating">
+        10 / ${game.rating} ⭐
       </div>
 
-
-      <p
-        class="game-page-description"
-        id="gameDescription"
-      >
-        توضیحات بازی
+      <p class="game-description">
+        ${game.description}
       </p>
 
-
-      <div class="game-info">
+      <div class="info-box">
 
         <div>
-
-          <strong>
-            ژانر
-          </strong>
-
-          <span id="infoGenre">
-            RPG
-          </span>
-
+          <strong>ژانر</strong>
+          <span>${game.genre}</span>
         </div>
 
-
         <div>
-
-          <strong>
-            امتیاز
-          </strong>
-
-          <span id="infoRating">
-            9.2 / 10
-          </span>
-
+          <strong>امتیاز</strong>
+          <span>10 / ${game.rating}</span>
         </div>
 
-
         <div>
-
-          <strong>
-            وضعیت
-          </strong>
-
-          <span>
-            فعال
-          </span>
-
+          <strong>وضعیت</strong>
+          <span>فعال</span>
         </div>
 
-
         <div>
-
-          <strong>
-            نوع
-          </strong>
-
-          <span>
-            Single Player
-          </span>
-
+          <strong>نوع</strong>
+          <span>${game.type}</span>
         </div>
 
       </div>
-
 
       <button
         class="play-button"
-        id="playGame"
-        type="button"
-      >
+        id="playGame">
         🎮 شروع بازی
       </button>
 
-
       <button
-        class="back-game-button"
-        id="backGameBottom"
-        type="button"
-      >
+        class="back-button"
+        id="backGame">
         ← بازگشت به بازی‌ها
       </button>
 
     </div>
+  `;
 
-  </div>
+  document.body.appendChild(page);
 
-
-  <!-- =================================================
-       JAVASCRIPT
-       ================================================= -->
-
-  <script>
-
-    /* ================= بازی‌ها ================= */
-
-    const games = [
-
-      {
-        title: "Cyberpunk 2077",
-        genre: "RPG",
-        rating: "9.2",
-        icon: "🌆",
-        description:
-          "یک ماجراجویی آینده‌نگرانه در شهری پر از فناوری و اتفاقات هیجان‌انگیز."
-      },
-
-      {
-        title: "Call of Duty",
-        genre: "FPS",
-        rating: "8.9",
-        icon: "🎯",
-        description:
-          "وارد میدان نبرد شو و مهارت‌های خودت را به نمایش بگذار."
-      },
-
-      {
-        title: "Minecraft",
-        genre: "Adventure",
-        rating: "9.0",
-        icon: "⛏️",
-        description:
-          "بساز، کشف کن و دنیای خودت را به وجود بیاور."
-      },
-
-      {
-        title: "FIFA",
-        genre: "Sports",
-        rating: "8.7",
-        icon: "⚽",
-        description:
-          "هیجان فوتبال را تجربه کن و تیم مورد علاقه‌ات را هدایت کن."
-      },
-
-      {
-        title: "The Witcher 3",
-        genre: "RPG",
-        rating: "9.5",
-        icon: "⚔️",
-        description:
-          "یک ماجراجویی بزرگ در دنیایی فانتزی و پر از داستان."
-      },
-
-      {
-        title: "Fortnite",
-        genre: "FPS",
-        rating: "8.6",
-        icon: "🔫",
-        description:
-          "در یک نبرد سریع و هیجان‌انگیز برای پیروزی تلاش کن."
-      },
-
-      {
-        title: "Red Dead Redemption 2",
-        genre: "Adventure",
-        rating: "9.6",
-        icon: "🤠",
-        description:
-          "یک ماجراجویی بزرگ در دنیای غرب وحشی."
-      },
-
-      {
-        title: "Rocket League",
-        genre: "Sports",
-        rating: "8.8",
-        icon: "🚗",
-        description:
-          "فوتبال را با ماشین‌های مسابقه‌ای تجربه کن."
-      }
-
-    ];
+  document.body.style.overflow =
+    "hidden";
 
 
-    /* ================= عناصر ================= */
+  /* بستن صفحه */
 
-    const gamesGrid =
-      document.getElementById("gamesGrid");
+  function closePage() {
 
-    const searchInput =
-      document.getElementById("searchInput");
-
-    const noResults =
-      document.getElementById("noResults");
-
-    const gamePage =
+    const currentPage =
       document.getElementById("gamePage");
 
-    const gameTitle =
-      document.getElementById("gameTitle");
-
-    const gameCategory =
-      document.getElementById("gameCategory");
-
-    const gameRating =
-      document.getElementById("gameRating");
-
-    const gameDescription =
-      document.getElementById("gameDescription");
-
-    const gameBigIcon =
-      document.getElementById("gameBigIcon");
-
-    const infoGenre =
-      document.getElementById("infoGenre");
-
-    const infoRating =
-      document.getElementById("infoRating");
-
-    const menu =
-      document.getElementById("mainMenu");
-
-    const menuButton =
-      document.getElementById("menuButton");
-
-
-    /* ================= وضعیت فیلتر ================= */
-
-    let currentGenre = "همه";
-
-
-    /* ================= نمایش بازی‌ها ================= */
-
-    function renderGames() {
-
-      const searchText =
-        searchInput.value
-          .trim()
-          .toLowerCase();
-
-
-      gamesGrid.innerHTML = "";
-
-
-      const filteredGames =
-        games.filter(function(game) {
-
-          const matchesGenre =
-            currentGenre === "همه" ||
-            game.genre === currentGenre;
-
-
-          const matchesSearch =
-            game.title
-              .toLowerCase()
-              .includes(searchText);
-
-
-          return (
-            matchesGenre &&
-            matchesSearch
-          );
-
-        });
-
-
-      if (filteredGames.length === 0) {
-
-        noResults.style.display =
-          "block";
-
-        return;
-
-      }
-
-
-      noResults.style.display =
-        "none";
-
-
-      filteredGames.forEach(function(game) {
-
-        const originalIndex =
-          games.indexOf(game);
-
-
-        const card =
-          document.createElement("div");
-
-
-        card.className =
-          "game-card";
-
-
-        card.dataset.gameIndex =
-          originalIndex;
-
-
-        card.innerHTML = `
-
-          <div class="game-icon">
-            ${game.icon}
-          </div>
-
-          <h2>
-            ${game.title}
-          </h2>
-
-          <div class="game-genre">
-            ${game.genre}
-          </div>
-
-          <p class="game-description">
-            ${game.description}
-          </p>
-
-          <div class="rating">
-            ⭐ ${game.rating}
-          </div>
-
-        `;
-
-
-        gamesGrid.appendChild(card);
-
-      });
-
+    if (currentPage) {
+      currentPage.remove();
     }
 
+    document.body.style.overflow =
+      "";
 
-    /* ================= جستجو ================= */
-
-    searchInput.addEventListener(
-      "input",
-      function() {
-
-        renderGames();
-
-      }
-    );
+  }
 
 
-    /* ================= فیلتر ================= */
-
-    document
-      .querySelectorAll(".filter-button")
-      .forEach(function(button) {
-
-        button.addEventListener(
-          "click",
-          function() {
-
-            document
-              .querySelectorAll(".filter-button")
-              .forEach(function(btn) {
-
-                btn.classList.remove(
-                  "active"
-                );
-
-              });
-
-
-            this.classList.add(
-              "active"
-            );
-
-
-            currentGenre =
-              this.dataset.genre;
-
-
-            renderGames();
-
-          }
-        );
-
-      });
-
-
-    /* ================= باز کردن بازی ================= */
-
-    function openGamePage(game) {
-
-      if (!game) {
-        return;
-      }
-
-
-      gameTitle.textContent =
-        game.title;
-
-
-      gameCategory.textContent =
-        game.genre;
-
-
-      gameRating.textContent =
-        "⭐ " + game.rating + " / 10";
-
-
-      gameDescription.textContent =
-        game.description;
-
-
-      gameBigIcon.textContent =
-        game.icon;
-
-
-      infoGenre.textContent =
-        game.genre;
-
-
-      infoRating.textContent =
-        game.rating + " / 10";
-
-
-      gamePage.classList.add(
-        "active"
-      );
-
-
-      document.body.style.overflow =
-        "hidden";
-
-    }
-
-
-    /* ================= کلیک روی بازی ================= */
-
-    gamesGrid.addEventListener(
+  document
+    .getElementById("closeGame")
+    .addEventListener(
       "click",
-      function(event) {
-
-        const card =
-          event.target.closest(
-            ".game-card"
-          );
+      closePage
+    );
 
 
-        if (!card) {
-          return;
-        }
+  document
+    .getElementById("backGame")
+    .addEventListener(
+      "click",
+      closePage
+    );
 
 
-        const index =
-          Number(
-            card.dataset.gameIndex
-          );
+  /* دکمه شروع بازی */
 
+  document
+    .getElementById("playGame")
+    .addEventListener(
+      "click",
+      () => {
 
-        if (
-          Number.isNaN(index) ||
-          !games[index]
-        ) {
-          return;
-        }
-
-
-        openGamePage(
-          games[index]
+        alert(
+          "🎮 بازی " +
+          game.title +
+          "\n\nلینک اجرای بازی را می‌توانیم در مرحله بعد به این دکمه اضافه کنیم."
         );
 
       }
     );
 
-
-    /* ================= بستن بازی ================= */
-
-    function closeGamePage() {
-
-      gamePage.classList.remove(
-        "active"
-      );
+}
 
 
-      document.body.style.overflow =
-        "";
+/* کلید ESC */
+
+document.addEventListener(
+  "keydown",
+  event => {
+
+    if (
+      event.key === "Escape"
+    ) {
+
+      const page =
+        document.getElementById(
+          "gamePage"
+        );
+
+      if (page) {
+
+        page.remove();
+
+        document.body.style.overflow =
+          "";
+
+      }
 
     }
 
+  }
+);
 
-    document
-      .getElementById("closeGame")
-      .addEventListener(
-        "click",
-        closeGamePage
-      );
 
+/* شروع اولیه */
 
-    document
-      .getElementById("backGame")
-      .addEventListener(
-        "click",
-        closeGamePage
-      );
+renderGames();
 
-
-    document
-      .getElementById("backGameBottom")
-      .addEventListener(
-        "click",
-        closeGamePage
-      );
-
-
-    /* ================= شروع بازی ================= */
-
-    document
-      .getElementById("playGame")
-      .addEventListener(
-        "click",
-        function() {
-
-          alert(
-            "🎮 صفحه اجرای بازی به‌زودی به GAMEHUB اضافه می‌شود!"
-          );
-
-        }
-      );
-
-
-    /* ================= منوی سه خط ================= */
-
-    menuButton.addEventListener(
-      "click",
-      function() {
-
-        menu.classList.toggle(
-          "active"
-        );
-
-      }
-    );
-
-
-    /* ================= خانه ================= */
-
-    document
-      .getElementById("homeButton")
-      .addEventListener(
-        "click",
-        function() {
-
-          menu.classList.remove(
-            "active"
-          );
-
-
-          closeGamePage();
-
-
-          document
-            .getElementById("home")
-            .scrollIntoView({
-              behavior: "smooth"
-            });
-
-        }
-      );
-
-
-    /* ================= بازی‌ها ================= */
-
-    document
-      .getElementById("gamesButton")
-      .addEventListener(
-        "click",
-        function() {
-
-          menu.classList.remove(
-            "active"
-          );
-
-
-          closeGamePage();
-
-
-          document
-            .getElementById(
-              "games-section"
-            )
-            .scrollIntoView({
-              behavior: "smooth"
-            });
-
-        }
-      );
-
-
-    /* ================= دکمه Hero ================= */
-
-    document
-      .getElementById(
-        "heroGamesButton"
-      )
-      .addEventListener(
-        "click",
-        function() {
-
-          document
-            .getElementById(
-              "games-section"
-            )
-            .scrollIntoView({
-              behavior: "smooth"
-            });
-
-        }
-      );
-
-
-    /* ================= اخبار ================= */
-
-    document
-      .getElementById("newsButton")
-      .addEventListener(
-        "click",
-        function() {
-
-          menu.classList.remove(
-            "active"
-          );
-
-
-          alert(
-            "📰 بخش اخبار به‌زودی اضافه می‌شود."
-          );
-
-        }
-      );
-
-
-    /* ================= حساب ================= */
-
-    document
-      .getElementById("accountButton")
-      .addEventListener(
-        "click",
-        function() {
-
-          menu.classList.remove(
-            "active"
-          );
-
-
-          alert(
-            "👤 بخش حساب کاربری به‌زودی اضافه می‌شود."
-          );
-
-        }
-      );
-
-
-    /* ================= ESC ================= */
-
-    document.addEventListener(
-      "keydown",
-      function(event) {
-
-        if (event.key === "Escape") {
-
-          closeGamePage();
-
-          menu.classList.remove(
-            "active"
-          );
-
-        }
-
-      }
-    );
-
-
-    /* ================= اجرای اولیه ================= */
-
-    renderGames();
-
-  </script>
+</script>
 
 </body>
-
 </html>
+```
+
