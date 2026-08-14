@@ -3,7 +3,7 @@ const games = [
     title: "Cyberpunk 2077",
     genre: "RPG",
     rating: "9.2",
-    icon: "🌆",
+    icon: "🎮",
     description:
       "یک ماجراجویی آینده‌نگرانه در شهری پر از فناوری و اتفاقات هیجان‌انگیز."
   },
@@ -18,240 +18,556 @@ const games = [
   {
     title: "Minecraft",
     genre: "Adventure",
-    rating: "9.5",
+    rating: "9.0",
     icon: "⛏️",
     description:
-      "دنیایی بزرگ برای ساختن، کشف کردن و ماجراجویی."
+      "بساز، کاوش کن و دنیای خودت را با خلاقیتت شکل بده."
   },
   {
-    title: "EA Sports FC",
+    title: "FIFA",
     genre: "Sports",
-    rating: "9.0",
+    rating: "8.7",
     icon: "⚽",
     description:
-      "تجربه یک مسابقه فوتبالی هیجان‌انگیز با تیم مورد علاقه‌ات."
+      "وارد زمین شو و یک مسابقه هیجان‌انگیز فوتبال را تجربه کن."
   }
 ];
 
 
-// ===============================
-// منوی سه خط
-// ===============================
-
-const menuBtn = document.getElementById("menuBtn");
-const nav = document.getElementById("nav");
-
-if (menuBtn && nav) {
-  menuBtn.addEventListener("click", () => {
-    nav.classList.toggle("open");
-  });
-}
-
-
-// ===============================
-// ورود / ثبت نام
-// ===============================
-
-const loginDemo = document.getElementById("loginDemo");
-
-if (loginDemo) {
-  loginDemo.addEventListener("click", () => {
-    alert("👤 بخش ورود و ثبت‌نام به‌زودی فعال می‌شود!");
-  });
-}
-
-
-// ===============================
-// فیلتر بازی‌ها
-// ===============================
-
-const filterButtons = document.querySelectorAll(".filter-btn");
-
-filterButtons.forEach((button) => {
-  button.addEventListener("click", () => {
-
-    filterButtons.forEach((btn) => {
-      btn.classList.remove("active");
-    });
-
-    button.classList.add("active");
-
-    const category = button.dataset.filter;
-
-    document.querySelectorAll(".game-card").forEach((card) => {
-
-      const genre = card.dataset.genre;
-
-      if (category === "all" || genre === category) {
-        card.style.display = "";
-      } else {
-        card.style.display = "none";
-      }
-
-    });
-  });
-});
-
-
-// ===============================
-// صفحه اختصاصی بازی
-// ===============================
+/* =====================================================
+   ساخت صفحه اختصاصی بازی
+===================================================== */
 
 function openGamePage(game) {
 
-  const oldPage = document.getElementById("gamePage");
+  // اگر صفحه‌ای از قبل باز است، حذفش کن
+  const oldPage = document.getElementById("game-page");
 
   if (oldPage) {
     oldPage.remove();
   }
 
+  // ساخت صفحه
   const page = document.createElement("div");
 
-  page.id = "gamePage";
+  page.id = "game-page";
+
+  page.style.cssText = `
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    background: #09070d;
+    color: white;
+    overflow-y: auto;
+    direction: rtl;
+    font-family: Arial, sans-serif;
+    padding: 30px 20px 60px;
+  `;
+
 
   page.innerHTML = `
-    <div class="game-page-overlay">
 
-      <div class="game-page">
+    <div style="
+      max-width:800px;
+      margin:auto;
+      text-align:center;
+    ">
 
-        <button class="game-close" id="closeGame">
-          ✕
-        </button>
+      <div style="
+        font-size:90px;
+        margin-top:20px;
+        margin-bottom:20px;
+      ">
+        ${game.icon}
+      </div>
 
-        <div class="game-big-icon">
-          ${game.icon}
-        </div>
 
-        <div class="game-page-category">
+      <div style="
+        color:#a855f7;
+        font-size:18px;
+        margin-bottom:10px;
+      ">
+        ${game.genre}
+      </div>
+
+
+      <h1 style="
+        font-size:40px;
+        margin:10px 0 20px;
+      ">
+        ${game.title}
+      </h1>
+
+
+      <div style="
+        font-size:24px;
+        margin-bottom:20px;
+      ">
+        ⭐ ${game.rating} / 10
+      </div>
+
+
+      <p style="
+        font-size:20px;
+        line-height:2;
+        color:#d1d1d1;
+        margin-bottom:30px;
+      ">
+        ${game.description}
+      </p>
+
+
+      <div style="
+        background:#15101c;
+        border:1px solid #30223d;
+        border-radius:20px;
+        padding:25px;
+        margin-bottom:30px;
+      ">
+
+        <div style="
+          font-size:18px;
+          margin-bottom:10px;
+        ">
+          <strong>ژانر:</strong>
           ${game.genre}
         </div>
 
-        <h1>
-          ${game.title}
-        </h1>
 
-        <div class="game-rating">
-          ⭐ ${game.rating}
+        <div style="
+          font-size:18px;
+          margin-bottom:10px;
+        ">
+          <strong>امتیاز:</strong>
+          ${game.rating} / 10
         </div>
 
-        <p class="game-description">
-          ${game.description}
-        </p>
 
-        <div class="game-info">
-
-          <div>
-            <strong>ژانر</strong>
-            <span>${game.genre}</span>
-          </div>
-
-          <div>
-            <strong>امتیاز</strong>
-            <span>${game.rating} / 10</span>
-          </div>
-
-          <div>
-            <strong>وضعیت</strong>
-            <span>فعال</span>
-          </div>
-
+        <div style="
+          font-size:18px;
+        ">
+          <strong>وضعیت:</strong>
+          فعال
         </div>
 
-        <button class="play-button" id="playGame">
+      </div>
+
+
+      <div style="
+        display:flex;
+        gap:15px;
+        justify-content:center;
+        flex-wrap:wrap;
+      ">
+
+        <button
+          id="play-game"
+          style="
+            border:none;
+            background:#8b3dff;
+            color:white;
+            padding:15px 30px;
+            border-radius:12px;
+            font-size:18px;
+            cursor:pointer;
+          "
+        >
           🎮 شروع بازی
         </button>
 
-        <button class="back-button" id="backGame">
+
+        <button
+          id="back-game"
+          style="
+            border:1px solid #8b3dff;
+            background:transparent;
+            color:white;
+            padding:15px 30px;
+            border-radius:12px;
+            font-size:18px;
+            cursor:pointer;
+          "
+        >
           ← بازگشت به بازی‌ها
         </button>
+
+      </div>
+
+
+      <div
+        id="game-area"
+        style="
+          display:none;
+          margin-top:30px;
+          background:#120d18;
+          border:1px solid #30223d;
+          border-radius:20px;
+          padding:25px;
+        "
+      >
+
+        <h2>🎮 بازی شروع شد!</h2>
+
+        <p id="game-message">
+          برای شروع روی دکمه زیر بزن.
+        </p>
+
+        <button
+          id="game-action"
+          style="
+            border:none;
+            background:#a855f7;
+            color:white;
+            padding:14px 25px;
+            border-radius:10px;
+            font-size:18px;
+            cursor:pointer;
+          "
+        >
+          شروع
+        </button>
+
+        <div
+          id="game-score"
+          style="
+            margin-top:20px;
+            font-size:22px;
+          "
+        >
+          امتیاز: 0
+        </div>
 
       </div>
 
     </div>
   `;
 
+
   document.body.appendChild(page);
 
+  // جلوگیری از اسکرول صفحه اصلی
   document.body.style.overflow = "hidden";
 
 
-  // بستن صفحه
-  const closeGame = document.getElementById("closeGame");
-  const backGame = document.getElementById("backGame");
+  /* =====================================================
+     دکمه شروع بازی
+  ===================================================== */
 
-  function closePage() {
-    page.remove();
-    document.body.style.overflow = "";
+  const playGame = document.getElementById("play-game");
+
+  if (playGame) {
+
+    playGame.addEventListener("click", () => {
+
+      const gameArea = document.getElementById("game-area");
+
+      if (gameArea) {
+        gameArea.style.display = "block";
+      }
+
+      const message = document.getElementById("game-message");
+
+      if (message) {
+        message.textContent =
+          `🎮 ${game.title} شروع شد! روی «بازی کن» بزن و امتیاز بگیر.`;
+      }
+
+      const action = document.getElementById("game-action");
+
+      if (action) {
+        action.textContent = "🎯 بازی کن";
+      }
+
+    });
+
   }
 
-  closeGame.addEventListener("click", closePage);
-  backGame.addEventListener("click", closePage);
+
+  /* =====================================================
+     دکمه بازی
+  ===================================================== */
+
+  const actionButton = document.getElementById("game-action");
+
+  let score = 0;
+
+  if (actionButton) {
+
+    actionButton.addEventListener("click", () => {
+
+      score += Math.floor(Math.random() * 10) + 1;
+
+      const scoreElement =
+        document.getElementById("game-score");
+
+      const message =
+        document.getElementById("game-message");
+
+      if (scoreElement) {
+        scoreElement.textContent =
+          `امتیاز: ${score}`;
+      }
+
+      if (message) {
+        message.textContent =
+          "🔥 عالی بود! دوباره بازی کن تا امتیازت بیشتر شود.";
+      }
+
+    });
+
+  }
 
 
-  // دکمه شروع بازی
-  const playGame = document.getElementById("playGame");
+  /* =====================================================
+     دکمه بازگشت
+  ===================================================== */
 
-  playGame.addEventListener("click", () => {
-    alert(
-      `🎮 ${game.title}\n\nصفحه بازی آماده است و در مرحله بعد می‌توانیم خود بازی را به این قسمت اضافه کنیم.`
-    );
-  });
+  const backGame = document.getElementById("back-game");
+
+  if (backGame) {
+
+    backGame.addEventListener("click", closeGamePage);
+
+  }
+
+
+  /* =====================================================
+     بستن با Escape
+  ===================================================== */
+
+  document.addEventListener(
+    "keydown",
+    gameEscapeHandler
+  );
+
 }
 
 
-// ===============================
-// تشخیص کلیک روی بازی‌ها
-// ===============================
+/* =====================================================
+   بستن صفحه بازی
+===================================================== */
 
-document.addEventListener("click", (event) => {
+function closeGamePage() {
 
-  const card = event.target.closest(".game-card");
+  const page =
+    document.getElementById("game-page");
+
+  if (page) {
+    page.remove();
+  }
+
+  document.body.style.overflow = "";
+
+  document.removeEventListener(
+    "keydown",
+    gameEscapeHandler
+  );
+
+}
+
+
+/* =====================================================
+   کلید Escape
+===================================================== */
+
+function gameEscapeHandler(event) {
+
+  if (event.key === "Escape") {
+    closeGamePage();
+  }
+
+}
+
+
+/* =====================================================
+   تشخیص کلیک روی بازی‌ها
+===================================================== */
+
+document.addEventListener("click", function(event) {
+
+  const card =
+    event.target.closest(".game-card");
 
   if (!card) {
     return;
   }
 
-  const index = Number(card.dataset.gameIndex);
 
-  if (!isNaN(index) && games[index]) {
+  /*
+    اگر خود کارت data-game-index داشته باشد،
+    همان بازی را باز می‌کنیم.
+  */
+
+  const index =
+    Number(card.dataset.gameIndex);
+
+
+  if (
+    !Number.isNaN(index) &&
+    games[index]
+  ) {
+
     openGamePage(games[index]);
+
     return;
   }
+
+
+  /*
+    اگر data-game-index وجود نداشت،
+    عنوان بازی را از کارت می‌خوانیم.
+  */
 
   const titleElement =
     card.querySelector("h2") ||
     card.querySelector("h3") ||
     card.querySelector(".game-title");
 
-  if (titleElement) {
 
-    const title = titleElement.textContent.trim();
-
-    const game = games.find((item) => item.title === title);
-
-    if (game) {
-      openGamePage(game);
-    }
+  if (!titleElement) {
+    return;
   }
+
+
+  const title =
+    titleElement.textContent.trim();
+
+
+  const game =
+    games.find(function(item) {
+
+      return item.title.toLowerCase() ===
+        title.toLowerCase();
+
+    });
+
+
+  if (game) {
+    openGamePage(game);
+  }
+
 });
 
 
-// ===============================
-// ESC برای بستن صفحه بازی
-// ===============================
+/* =====================================================
+   اضافه کردن شماره بازی به کارت‌ها
+===================================================== */
 
-document.addEventListener("keydown", (event) => {
+function setupGameCards() {
 
-  if (event.key === "Escape") {
+  const cards =
+    document.querySelectorAll(".game-card");
 
-    const page = document.getElementById("gamePage");
 
-    if (page) {
-      page.remove();
-      document.body.style.overflow = "";
+  cards.forEach(function(card, index) {
+
+    if (!card.dataset.gameIndex) {
+
+      card.dataset.gameIndex =
+        String(index);
+
     }
 
+    card.style.cursor = "pointer";
+
+  });
+
+}
+
+
+/* =====================================================
+   فیلتر بازی‌ها
+===================================================== */
+
+document.addEventListener("click", function(event) {
+
+  const button =
+    event.target.closest("[data-genre]");
+
+  if (!button) {
+    return;
   }
 
-}); 
-console.log("GAMEHUB SCRIPT NEW VERSION");
+
+  const genre =
+    button.dataset.genre;
+
+
+  const cards =
+    document.querySelectorAll(".game-card");
+
+
+  cards.forEach(function(card) {
+
+    if (
+      genre === "all" ||
+      !genre
+    ) {
+
+      card.style.display = "";
+
+      return;
+
+    }
+
+
+    const cardGenreElement =
+      card.querySelector(".game-category") ||
+      card.querySelector(".game-genre");
+
+
+    if (!cardGenreElement) {
+      return;
+    }
+
+
+    const cardGenre =
+      cardGenreElement.textContent.trim();
+
+
+    if (
+      cardGenre.toLowerCase() ===
+      genre.toLowerCase()
+    ) {
+
+      card.style.display = "";
+
+    } else {
+
+      card.style.display = "none";
+
+    }
+
+  });
+
+});
+
+
+/* =====================================================
+   اجرای اولیه
+===================================================== */
+
+document.addEventListener(
+  "DOMContentLoaded",
+  function() {
+
+    setupGameCards();
+
+  }
+);
+
+
+/* اگر DOM از قبل آماده شده باشد */
+if (
+  document.readyState === "interactive" ||
+  document.readyState === "complete"
+) {
+
+  setupGameCards();
+
+}
+
+
+console.log(
+  "GAMEHUB SCRIPT READY"
+);
