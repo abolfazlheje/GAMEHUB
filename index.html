@@ -271,6 +271,26 @@ header {
 
 /* NEWS */
 
+.news-toolbar {
+  max-width: 700px;
+  margin: 0 auto 30px;
+}
+
+.news-search {
+  width: 100%;
+  padding: 16px 20px;
+  border-radius: 16px;
+  border: 1px solid #392b47;
+  background: #100d15;
+  color: white;
+  font-size: 16px;
+  outline: none;
+}
+
+.news-search:focus {
+  border-color: #a64cff;
+}
+
 .news-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -281,7 +301,8 @@ header {
   background: #100d15;
   border: 1px solid #241c2c;
   border-radius: 18px;
-  padding: 22px;
+  padding: 0;
+  overflow: hidden;
   transition: .25s;
 }
 
@@ -290,14 +311,39 @@ header {
   border-color: #8d35d8;
 }
 
-.news-icon {
-  font-size: 45px;
-  margin-bottom: 15px;
+.news-cover {
+  min-height: 150px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 72px;
+  background:
+    radial-gradient(
+      circle at 30% 20%,
+      #5d2780,
+      #17101f 65%
+    );
+}
+
+.news-body {
+  padding: 22px;
+}
+
+.news-category {
+  display: inline-block;
+  color: #d7a9ff;
+  background: rgba(166,76,255,.12);
+  border: 1px solid rgba(166,76,255,.25);
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  margin-bottom: 10px;
 }
 
 .news-date {
   color: #a64cff;
   font-size: 14px;
+  margin-top: 8px;
   margin-bottom: 12px;
 }
 
@@ -319,6 +365,76 @@ header {
   border: none;
   cursor: pointer;
   font-size: 16px;
+}
+
+/* NEWS MODAL */
+
+.news-modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 7000;
+  background: rgba(0,0,0,.82);
+  padding: 25px 15px;
+  overflow-y: auto;
+}
+
+.news-modal.active {
+  display: block;
+}
+
+.news-modal-inner {
+  max-width: 800px;
+  margin: 20px auto;
+  background: #0e0b13;
+  border: 1px solid #3a2948;
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 20px 80px rgba(0,0,0,.5);
+}
+
+.news-modal-cover {
+  min-height: 210px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 100px;
+  background:
+    radial-gradient(
+      circle at center,
+      #6d2e96,
+      #100b16 70%
+    );
+}
+
+.news-modal-content {
+  padding: 30px;
+}
+
+.news-modal-content h2 {
+  font-size: 34px;
+  margin: 15px 0;
+  line-height: 1.5;
+}
+
+.news-modal-content p {
+  color: #c8c2cc;
+  line-height: 2.1;
+  font-size: 17px;
+}
+
+.news-close {
+  margin: 20px 30px 0;
+  padding: 11px 18px;
+  border: none;
+  border-radius: 12px;
+  background: #211824;
+  color: white;
+  cursor: pointer;
+}
+
+.news-close:hover {
+  background: #8d35d8;
 }
 
 /* STATS */
@@ -481,7 +597,15 @@ footer {
   color: #777;
 }
 
-/* MOBILE */
+/* RESPONSIVE */
+
+@media (max-width: 900px) {
+
+  .news-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+}
 
 @media (max-width: 750px) {
 
@@ -505,10 +629,16 @@ footer {
     font-size: 32px;
   }
 
+  .news-modal-content h2 {
+    font-size: 27px;
+  }
+
 }
 
 </style>
-</head><body>
+</head>
+
+<body>
 
 <header>
 
@@ -525,9 +655,6 @@ footer {
   </div>
 
 </header>
-
-
-<!-- MENU -->
 
 <nav
   class="menu"
@@ -563,9 +690,6 @@ footer {
 
 </nav>
 
-
-<!-- HERO -->
-
 <section
   class="hero"
   id="home">
@@ -588,12 +712,7 @@ footer {
     مشاهده بازی‌ها 🎮
   </button>
 
-</section>
-
-
-<!-- GAMES -->
-
-<section
+</section><section
   class="section"
   id="games">
 
@@ -605,7 +724,6 @@ footer {
     بازی مورد علاقه‌ات را پیدا کن
   </p>
 
-
   <div class="search-box">
 
     <input
@@ -615,7 +733,6 @@ footer {
       autocomplete="off">
 
   </div>
-
 
   <div class="filters">
 
@@ -656,12 +773,10 @@ footer {
 
   </div>
 
-
   <div
     class="games-grid"
     id="gamesGrid">
   </div>
-
 
   <div
     id="noResults"
@@ -707,99 +822,91 @@ footer {
   </p>
 
 
-  <div class="news-grid">
+  <div class="news-toolbar">
 
-
-    <article class="news-card">
-
-      <div class="news-icon">
-        🎮
-      </div>
-
-      <div class="news-date">
-        خبر ویژه
-      </div>
-
-      <h3>
-        GAMEHUB وارد مرحله جدیدی شد
-      </h3>
-
-      <p>
-        بخش‌های جدیدی برای جست‌وجو و پیدا کردن
-        بازی‌های محبوب به GAMEHUB اضافه شده است.
-      </p>
-
-      <button
-        type="button"
-        class="read-more"
-        onclick="showNews('GAMEHUB وارد مرحله جدیدی شد')">
-        ادامه مطلب ←
-      </button>
-
-    </article>
-
-
-    <article class="news-card">
-
-      <div class="news-icon">
-        🏆
-      </div>
-
-      <div class="news-date">
-        اخبار بازی
-      </div>
-
-      <h3>
-        محبوب‌ترین بازی‌های این هفته
-      </h3>
-
-      <p>
-        فهرست بازی‌های محبوب را بررسی کن و
-        بازی بعدی خودت را پیدا کن.
-      </p>
-
-      <button
-        type="button"
-        class="read-more"
-        onclick="showNews('محبوب‌ترین بازی‌های این هفته')">
-        ادامه مطلب ←
-      </button>
-
-    </article>
-
-
-    <article class="news-card">
-
-      <div class="news-icon">
-        🚀
-      </div>
-
-      <div class="news-date">
-        GAMEHUB
-      </div>
-
-      <h3>
-        امکانات جدید در راه هستند
-      </h3>
-
-      <p>
-        قابلیت‌های بیشتری برای کاربران GAMEHUB
-        در نسخه‌های بعدی اضافه خواهد شد.
-      </p>
-
-      <button
-        type="button"
-        class="read-more"
-        onclick="showNews('امکانات جدید در راه هستند')">
-        ادامه مطلب ←
-      </button>
-
-    </article>
-
+    <input
+      id="newsSearch"
+      class="news-search"
+      type="search"
+      placeholder="🔎 جستجوی خبر..."
+      autocomplete="off">
 
   </div>
 
+
+  <div
+    class="news-grid"
+    id="newsGrid">
+  </div>
+
+
+  <div
+    id="noNewsResults"
+    style="
+      display:none;
+      text-align:center;
+      color:#999;
+      padding:40px;">
+    😕 خبری پیدا نشد.
+  </div>
+
 </section>
+
+
+<!-- NEWS ARTICLE MODAL -->
+
+<div
+  class="news-modal"
+  id="newsModal">
+
+  <div class="news-modal-inner">
+
+    <button
+      type="button"
+      class="news-close"
+      id="newsClose">
+      ✕ بستن خبر
+    </button>
+
+
+    <div
+      class="news-modal-cover"
+      id="newsModalIcon">
+      📰
+    </div>
+
+
+    <div class="news-modal-content">
+
+      <div
+        class="news-category"
+        id="newsModalCategory">
+        اخبار
+      </div>
+
+
+      <div
+        class="news-date"
+        id="newsModalDate">
+        امروز
+      </div>
+
+
+      <h2
+        id="newsModalTitle">
+        عنوان خبر
+      </h2>
+
+
+      <p
+        id="newsModalText">
+      </p>
+
+    </div>
+
+  </div>
+
+</div>
 
 
 <!-- STATS -->
@@ -847,6 +954,8 @@ footer {
 </section>
 
 
+<!-- FOOTER -->
+
 <footer>
 
   GAMEHUB © 2026 🎮
@@ -884,7 +993,8 @@ footer {
     </div>
 
 
-    <h1 id="gameTitle">
+    <h1
+      id="gameTitle">
       Cyberpunk 2077
     </h1>
 
@@ -981,38 +1091,6 @@ footer {
 <script>
 
 /* ============================= */
-/* GAMEHUB MENU                  */
-/* ============================= */
-
-function toggleGameHubMenu() {
-
-  const menu =
-    document.getElementById("menu");
-
-  if (menu) {
-
-    menu.classList.toggle("active");
-
-  }
-
-}
-
-
-function closeGameHubMenu() {
-
-  const menu =
-    document.getElementById("menu");
-
-  if (menu) {
-
-    menu.classList.remove("active");
-
-  }
-
-}
-
-
-/* ============================= */
 /* GAME DATA                     */
 /* ============================= */
 
@@ -1094,6 +1172,69 @@ const games = [
 
 
 /* ============================= */
+/* NEWS DATA                     */
+/* ============================= */
+
+const newsItems = [
+
+  {
+    title: "GAMEHUB وارد مرحله جدیدی شد",
+    category: "GAMEHUB",
+    date: "۱۴۰۵/۰۵/۲۳",
+    icon: "🎮",
+    text:
+      "نسخه جدید GAMEHUB با رابط کاربری بهتر، جستجوی سریع‌تر و امکانات بیشتر برای علاقه‌مندان به بازی منتشر شد. این شروع مسیر جدیدی برای تبدیل GAMEHUB به یک مرکز کامل گیمینگ است."
+  },
+
+  {
+    title: "محبوب‌ترین بازی‌های این هفته",
+    category: "بازی‌ها",
+    date: "۱۴۰۵/۰۵/۲۲",
+    icon: "🏆",
+    text:
+      "در این هفته بازی‌های مختلفی توجه کاربران را به خود جلب کرده‌اند. از بازی‌های نقش‌آفرینی گرفته تا بازی‌های رقابتی، انتخاب‌های زیادی برای تجربه یک بازی جدید وجود دارد."
+  },
+
+  {
+    title: "امکانات جدید در راه هستند",
+    category: "GAMEHUB",
+    date: "۱۴۰۵/۰۵/۲۰",
+    icon: "🚀",
+    text:
+      "قابلیت‌های بیشتری برای GAMEHUB در حال آماده‌سازی است؛ از جمله صفحات کامل‌تر بازی‌ها، اخبار بیشتر، امکانات اجتماعی و بخش‌های جدیدی که تجربه کاربران را بهتر می‌کنند."
+  },
+
+  {
+    title: "راهنمای انتخاب بازی مناسب",
+    category: "راهنما",
+    date: "۱۴۰۵/۰۵/۱۸",
+    icon: "🧭",
+    text:
+      "برای انتخاب بازی مناسب، ابتدا ژانر مورد علاقه خودت را مشخص کن و سپس امتیاز، توضیحات و سبک بازی را بررسی کن. GAMEHUB به مرور اطلاعات بیشتری برای هر بازی ارائه خواهد کرد."
+  },
+
+  {
+    title: "بازی‌های چندنفره دوباره محبوب شدند",
+    category: "گیمینگ",
+    date: "۱۴۰۵/۰۵/۱۵",
+    icon: "👥",
+    text:
+      "بازی‌های چندنفره یکی از جذاب‌ترین بخش‌های دنیای گیم هستند. رقابت با دوستان و بازیکنان دیگر می‌تواند تجربه بازی را بسیار هیجان‌انگیزتر کند."
+  },
+
+  {
+    title: "به‌روزرسانی بزرگ GAMEHUB",
+    category: "به‌روزرسانی",
+    date: "۱۴۰۵/۰۵/۱۲",
+    icon: "⚡",
+    text:
+      "در به‌روزرسانی‌های آینده، ظاهر سایت، بخش اخبار و اطلاعات بازی‌ها توسعه داده می‌شود تا GAMEHUB به یک مرجع کامل‌تر برای گیمرها تبدیل شود."
+  }
+
+];
+
+
+/* ============================= */
 /* ELEMENTS                     */
 /* ============================= */
 
@@ -1105,6 +1246,15 @@ const searchInput =
 
 const noResults =
   document.getElementById("noResults");
+
+const newsGrid =
+  document.getElementById("newsGrid");
+
+const newsSearch =
+  document.getElementById("newsSearch");
+
+const noNewsResults =
+  document.getElementById("noNewsResults");
 
 const gamePage =
   document.getElementById("gamePage");
@@ -1131,7 +1281,59 @@ const infoRating =
   document.getElementById("infoRating");
 
 
+const newsModal =
+  document.getElementById("newsModal");
+
+const newsClose =
+  document.getElementById("newsClose");
+
+const newsModalIcon =
+  document.getElementById("newsModalIcon");
+
+const newsModalCategory =
+  document.getElementById("newsModalCategory");
+
+const newsModalDate =
+  document.getElementById("newsModalDate");
+
+const newsModalTitle =
+  document.getElementById("newsModalTitle");
+
+const newsModalText =
+  document.getElementById("newsModalText");
+
+
 let selectedGenre = "همه";
+/* ============================= */
+/* MENU                          */
+/* ============================= */
+
+function toggleGameHubMenu() {
+
+  const menu =
+    document.getElementById("menu");
+
+  if (menu) {
+
+    menu.classList.toggle("active");
+
+  }
+
+}
+
+
+function closeGameHubMenu() {
+
+  const menu =
+    document.getElementById("menu");
+
+  if (menu) {
+
+    menu.classList.remove("active");
+
+  }
+
+}
 
 
 /* ============================= */
@@ -1140,8 +1342,12 @@ let selectedGenre = "همه";
 
 function renderGames() {
 
+  if (!gamesGrid) return;
+
+
   const text =
-    searchInput.value
+    searchInput
+      .value
       .trim()
       .toLowerCase();
 
@@ -1158,12 +1364,16 @@ function renderGames() {
         game.title
           .toLowerCase()
           .includes(text) ||
+
         game.genre
           .toLowerCase()
           .includes(text);
 
 
-      return genreMatch && searchMatch;
+      return (
+        genreMatch &&
+        searchMatch
+      );
 
     });
 
@@ -1236,17 +1446,21 @@ function renderGames() {
 
 
 /* ============================= */
-/* SEARCH                        */
+/* GAME SEARCH                   */
 /* ============================= */
 
-searchInput.addEventListener(
-  "input",
-  renderGames
-);
+if (searchInput) {
+
+  searchInput.addEventListener(
+    "input",
+    renderGames
+  );
+
+}
 
 
 /* ============================= */
-/* FILTERS                       */
+/* GAME FILTERS                  */
 /* ============================= */
 
 document
@@ -1259,12 +1473,18 @@ document
 
         document
           .querySelectorAll(".filter")
-          .forEach(btn =>
-            btn.classList.remove("active")
-          );
+          .forEach(btn => {
+
+            btn.classList.remove(
+              "active"
+            );
+
+          });
 
 
-        button.classList.add("active");
+        button.classList.add(
+          "active"
+        );
 
 
         selectedGenre =
@@ -1283,63 +1503,378 @@ document
 /* OPEN GAME                     */
 /* ============================= */
 
-gamesGrid.addEventListener(
-  "click",
-  event => {
+if (gamesGrid) {
 
-    const card =
-      event.target.closest(".game-card");
+  gamesGrid.addEventListener(
+    "click",
+    event => {
+
+      const card =
+        event.target.closest(
+          ".game-card"
+        );
 
 
-    if (!card) return;
+      if (!card) return;
 
+
+      const index =
+        Number(card.dataset.index);
+
+
+      const game =
+        games[index];
+
+
+      if (!game) return;
+
+
+      gameIcon.textContent =
+        game.icon;
+
+
+      gameTitle.textContent =
+        game.title;
+
+
+      gameGenre.textContent =
+        game.genre;
+
+
+      gameRating.textContent =
+        "⭐ " +
+        game.rating +
+        " / 10";
+
+
+      gameDescription.textContent =
+        game.description;
+
+
+      infoGenre.textContent =
+        game.genre;
+
+
+      infoRating.textContent =
+        game.rating +
+        " / 10";
+
+
+      gamePage.classList.add(
+        "active"
+      );
+
+
+      document.body.style.overflow =
+        "hidden";
+
+    }
+  );
+
+}
+
+
+/* ============================= */
+/* NEWS RENDER                   */
+/* ============================= */
+
+function renderNews() {
+
+  if (!newsGrid) return;
+
+
+  const searchText =
+    newsSearch
+      ? newsSearch.value
+          .trim()
+          .toLowerCase()
+      : "";
+
+
+  const filtered =
+    newsItems.filter(item => {
+
+      return (
+
+        item.title
+          .toLowerCase()
+          .includes(searchText)
+
+        ||
+
+        item.category
+          .toLowerCase()
+          .includes(searchText)
+
+        ||
+
+        item.text
+          .toLowerCase()
+          .includes(searchText)
+
+      );
+
+    });
+
+
+  newsGrid.innerHTML = "";
+
+
+  if (filtered.length === 0) {
+
+    noNewsResults.style.display =
+      "block";
+
+    return;
+
+  }
+
+
+  noNewsResults.style.display =
+    "none";
+
+
+  filtered.forEach(item => {
 
     const index =
-      Number(card.dataset.index);
+      newsItems.indexOf(item);
 
 
-    const game =
-      games[index];
+    const card =
+      document.createElement("article");
 
 
-    gameIcon.textContent =
-      game.icon;
+    card.className =
+      "news-card";
 
 
-    gameTitle.textContent =
-      game.title;
+    card.dataset.index =
+      index;
 
 
-    gameGenre.textContent =
-      game.genre;
+    card.innerHTML = `
+
+      <div class="news-cover">
+        ${item.icon}
+      </div>
+
+      <div class="news-body">
+
+        <div class="news-category">
+          ${item.category}
+        </div>
+
+        <div class="news-date">
+          ${item.date}
+        </div>
+
+        <h3>
+          ${item.title}
+        </h3>
+
+        <p>
+          ${item.text}
+        </p>
+
+        <button
+          type="button"
+          class="read-more"
+          data-news-index="${index}">
+          ادامه مطلب ←
+        </button>
+
+      </div>
+
+    `;
 
 
-    gameRating.textContent =
-      "⭐ " + game.rating + " / 10";
+    newsGrid.appendChild(card);
+
+  });
+
+}
 
 
-    gameDescription.textContent =
-      game.description;
+/* ============================= */
+/* NEWS SEARCH                   */
+/* ============================= */
+
+if (newsSearch) {
+
+  newsSearch.addEventListener(
+    "input",
+    renderNews
+  );
+
+}
 
 
-    infoGenre.textContent =
-      game.genre;
+/* ============================= */
+/* OPEN NEWS                     */
+/* ============================= */
+
+function openNews(index) {
+
+  const item =
+    newsItems[index];
 
 
-    infoRating.textContent =
-      game.rating + " / 10";
+  if (!item || !newsModal) {
+    return;
+  }
 
 
-    gamePage.classList.add(
+  newsModalIcon.textContent =
+    item.icon;
+
+
+  newsModalCategory.textContent =
+    item.category;
+
+
+  newsModalDate.textContent =
+    item.date;
+
+
+  newsModalTitle.textContent =
+    item.title;
+
+
+  newsModalText.textContent =
+    item.text;
+
+
+  newsModal.classList.add(
+    "active"
+  );
+
+
+  document.body.style.overflow =
+    "hidden";
+
+}
+
+
+/* ============================= */
+/* CLOSE NEWS                    */
+/* ============================= */
+
+function closeNews() {
+
+  if (!newsModal) return;
+
+
+  newsModal.classList.remove(
+    "active"
+  );
+
+
+  if (
+    !gamePage ||
+    !gamePage.classList.contains(
       "active"
+    )
+  ) {
+
+    document.body.style.overflow =
+      "";
+
+  }
+
+}
+
+
+/* ============================= */
+/* NEWS BUTTONS                  */
+/* ============================= */
+
+if (newsGrid) {
+
+  newsGrid.addEventListener(
+    "click",
+    event => {
+
+      const button =
+        event.target.closest(
+          "[data-news-index]"
+        );
+
+
+      if (!button) return;
+
+
+      const index =
+        Number(
+          button.dataset.newsIndex
+        );
+
+
+      openNews(index);
+
+    }
+  );
+
+}
+
+
+/* ============================= */
+/* NEWS CLOSE BUTTON             */
+/* ============================= */
+
+if (newsClose) {
+
+  newsClose.addEventListener(
+    "click",
+    closeNews
+  );
+
+}
+
+
+/* ============================= */
+/* CLOSE NEWS BY BACKDROP        */
+/* ============================= */
+
+if (newsModal) {
+
+  newsModal.addEventListener(
+    "click",
+    event => {
+
+      if (
+        event.target === newsModal
+      ) {
+
+        closeNews();
+
+      }
+
+    }
+  );
+
+}
+
+
+/* ============================= */
+/* OLD SHOW NEWS SUPPORT         */
+/* ============================= */
+
+function showNews(title) {
+
+  const index =
+    newsItems.findIndex(
+      item =>
+        item.title === title
     );
 
 
-    document.body.style.overflow =
-      "hidden";
+  if (index !== -1) {
+
+    openNews(index);
 
   }
-);/* ============================= */
+
+        }/* ============================= */
 /* CLOSE GAME                    */
 /* ============================= */
 
@@ -1352,9 +1887,13 @@ const backButton =
 
 function closeGamePage() {
 
-  gamePage.classList.remove(
-    "active"
-  );
+  if (gamePage) {
+
+    gamePage.classList.remove(
+      "active"
+    );
+
+  }
 
   document.body.style.overflow =
     "";
@@ -1362,30 +1901,51 @@ function closeGamePage() {
 }
 
 
-/* بستن با دکمه × */
+/* ============================= */
+/* CLOSE GAME BUTTON             */
+/* ============================= */
 
-closeGame.addEventListener(
-  "click",
-  closeGamePage
-);
+if (closeGame) {
+
+  closeGame.addEventListener(
+    "click",
+    closeGamePage
+  );
+
+}
 
 
-/* بازگشت به بازی‌ها */
+/* ============================= */
+/* BACK TO GAMES                 */
+/* ============================= */
 
-backButton.addEventListener(
-  "click",
-  () => {
+if (backButton) {
 
-    closeGamePage();
+  backButton.addEventListener(
+    "click",
+    () => {
 
-    document.getElementById(
-      "games"
-    ).scrollIntoView({
-      behavior: "smooth"
-    });
+      closeGamePage();
 
-  }
-);
+
+      const gamesSection =
+        document.getElementById(
+          "games"
+        );
+
+
+      if (gamesSection) {
+
+        gamesSection.scrollIntoView({
+          behavior: "smooth"
+        });
+
+      }
+
+    }
+  );
+
+}
 
 
 /* ============================= */
@@ -1393,32 +1953,22 @@ backButton.addEventListener(
 /* ============================= */
 
 const playButton =
-  document.getElementById("playButton");
+  document.getElementById(
+    "playButton"
+  );
 
 
-playButton.addEventListener(
-  "click",
-  () => {
+if (playButton) {
 
-    alert(
-      "🎮 بازی به‌زودی در GAMEHUB قابل اجرا خواهد بود!"
-    );
+  playButton.addEventListener(
+    "click",
+    () => {
 
-  }
-);
+      alert(
+        "🎮 بازی به‌زودی در GAMEHUB قابل اجرا خواهد بود!"
+      );
 
-
-/* ============================= */
-/* NEWS                          */
-/* ============================= */
-
-function showNews(title) {
-
-  alert(
-    "📰 " +
-    title +
-    "\n\n" +
-    "این خبر در نسخه بعدی GAMEHUB با جزئیات کامل منتشر خواهد شد."
+    }
   );
 
 }
@@ -1440,11 +1990,19 @@ if (heroGamesButton) {
     "click",
     () => {
 
-      document.getElementById(
-        "games"
-      ).scrollIntoView({
-        behavior: "smooth"
-      });
+      const gamesSection =
+        document.getElementById(
+          "games"
+        );
+
+
+      if (gamesSection) {
+
+        gamesSection.scrollIntoView({
+          behavior: "smooth"
+        });
+
+      }
 
     }
   );
@@ -1453,7 +2011,7 @@ if (heroGamesButton) {
 
 
 /* ============================= */
-/* MENU CLOSE ON OUTSIDE CLICK   */
+/* CLOSE MENU OUTSIDE             */
 /* ============================= */
 
 document.addEventListener(
@@ -1461,18 +2019,28 @@ document.addEventListener(
   event => {
 
     const menu =
-      document.getElementById("menu");
+      document.getElementById(
+        "menu"
+      );
 
     const menuButton =
-      document.getElementById("menuButton");
+      document.getElementById(
+        "menuButton"
+      );
 
 
     if (
       menu &&
       menuButton &&
-      menu.classList.contains("active") &&
-      !menu.contains(event.target) &&
-      !menuButton.contains(event.target)
+      menu.classList.contains(
+        "active"
+      ) &&
+      !menu.contains(
+        event.target
+      ) &&
+      !menuButton.contains(
+        event.target
+      )
     ) {
 
       menu.classList.remove(
@@ -1493,9 +2061,13 @@ document.addEventListener(
   "keydown",
   event => {
 
-    if (event.key === "Escape") {
+    if (
+      event.key === "Escape"
+    ) {
 
       closeGamePage();
+
+      closeNews();
 
       closeGameHubMenu();
 
@@ -1511,7 +2083,10 @@ document.addEventListener(
 
 renderGames();
 
+renderNews();
+
 </script>
 
 </body>
+
 </html>
