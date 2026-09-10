@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+DOCTYPE html>
 <html lang="fa" dir="rtl">
 
 <head>
@@ -635,6 +635,138 @@ footer {
 
 }
 
+
+/* ============================= */
+/* FREETOGAME API ENHANCEMENTS   */
+/* ============================= */
+
+.api-toolbar{
+  display:flex;
+  justify-content:center;
+  flex-wrap:wrap;
+  gap:10px;
+  margin:0 auto 28px;
+}
+
+.api-sort{
+  padding:12px 18px;
+  border-radius:14px;
+  border:1px solid #392b47;
+  background:#100d15;
+  color:#ddd;
+  outline:none;
+  cursor:pointer;
+}
+
+.api-status{
+  max-width:900px;
+  margin:0 auto 25px;
+  padding:13px 16px;
+  border:1px solid #30243a;
+  border-radius:14px;
+  background:#0e0b13;
+  color:#aaa;
+  text-align:center;
+  font-size:14px;
+}
+
+.game-card{
+  overflow:hidden;
+  padding:0;
+}
+
+.game-card .game-image-wrap{
+  position:relative;
+  height:190px;
+  overflow:hidden;
+  background:#151019;
+}
+
+.game-card .game-image{
+  width:100%;
+  height:100%;
+  display:block;
+  object-fit:cover;
+  transition:transform .35s ease;
+}
+
+.game-card:hover .game-image{
+  transform:scale(1.06);
+}
+
+.game-card .game-image-overlay{
+  position:absolute;
+  inset:0;
+  background:linear-gradient(to top,rgba(8,7,13,.92),rgba(8,7,13,0) 65%);
+}
+
+.game-card .game-card-body{
+  padding:20px;
+}
+
+.game-card .game-platform{
+  color:#8fd3ff;
+  font-size:13px;
+  margin-top:9px;
+  text-align:center;
+}
+
+.game-card .game-date{
+  color:#777;
+  font-size:13px;
+  text-align:center;
+  margin-top:8px;
+}
+
+.api-empty{
+  text-align:center;
+  color:#999;
+  padding:45px 20px;
+  grid-column:1/-1;
+}
+
+.big-game-icon{
+  font-size:0;
+  overflow:hidden;
+  border-radius:18px;
+}
+
+.big-game-icon img{
+  width:100%;
+  max-height:360px;
+  object-fit:cover;
+  display:block;
+}
+
+.game-external{
+  display:block;
+  text-align:center;
+  margin-top:12px;
+  color:#b65cf4;
+  text-decoration:none;
+}
+
+.game-external:hover{
+  color:#d9a7ff;
+}
+
+.api-credit{
+  margin-top:12px;
+  font-size:13px;
+  color:#666;
+}
+
+.api-credit a{
+  color:#a64cff;
+  text-decoration:none;
+}
+
+@media (max-width:750px){
+  .game-card .game-image-wrap{
+    height:170px;
+  }
+}
+
 </style>
 </head>
 
@@ -771,6 +903,19 @@ footer {
       Sports
     </button>
 
+  </div>
+
+
+  <div class="api-toolbar">
+    <select id="apiSort" class="api-sort" aria-label="مرتب‌سازی بازی‌ها">
+      <option value="popularity">🔥 محبوب‌ترین</option>
+      <option value="release-date">🆕 جدیدترین</option>
+      <option value="alphabetical">🔤 الفبایی</option>
+    </select>
+  </div>
+
+  <div id="apiStatus" class="api-status">
+    ⏳ در حال دریافت بازی‌های واقعی از FreeToGame...
   </div>
 
   <div
@@ -959,6 +1104,7 @@ footer {
 <footer>
 
   GAMEHUB © 2026 🎮
+  <div class="api-credit">اطلاعات بازی‌ها با استفاده از <a href="https://www.freetogame.com/" target="_blank" rel="noopener noreferrer">FreeToGame</a> ارائه می‌شود.</div>
 
 </footer>
 
@@ -2085,6 +2231,349 @@ renderGames();
 
 renderNews();
 
+</script>
+
+
+<script>
+/* =========================================================
+   GAMEHUB — FreeToGame API
+   No API key/account required.
+   ========================================================= */
+
+(() => {
+  const API_BASE = "https://www.freetogame.com/api";
+  const apiStatus = document.getElementById("apiStatus");
+  const apiSort = document.getElementById("apiSort");
+
+  let apiGames = [];
+  let apiLoaded = false;
+
+  const fallbackGames = games.map(game => ({
+    ...game,
+    id: null,
+    image: "",
+    game_url: "",
+    platform: "PC",
+    release_date: ""
+  }));
+
+  function setApiStatus(message) {
+    if (apiStatus) apiStatus.textContent = message;
+  }
+
+  function normalizeGame(item) {
+    return {
+      id: item.id,
+      title: item.title || "بدون نام",
+      genre: item.genre || item.category || "Gaming",
+      rating: item.rating ? String(item.rating) : "—",
+      icon: "🎮",
+      image: item.thumbnail || "",
+      description: item.short_description || item.description || "توضیحی برای این بازی ثبت نشده است.",
+      game_url: item.game_url || "",
+      platform: item.platform || "PC",
+      release_date: item.release_date || "",
+      developer: item.developer || "نامشخص",
+      publisher: item.publisher || "نامشخص"
+    };
+  }
+
+  function escapeHtml(value) {
+    return String(value ?? "")
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
+  }
+
+  function genreMatches(game, selected) {
+    if (selected === "همه") return true;
+
+    const genre = String(game.genre || "").toLowerCase();
+
+    if (selected === "FPS") {
+      return genre.includes("shooter") || genre.includes("fps");
+    }
+
+    if (selected === "RPG") {
+      return genre.includes("mmorpg") ||
+             genre.includes("action-rpg") ||
+             genre.includes("rpg") ||
+             genre.includes("fantasy");
+    }
+
+    if (selected === "Adventure") {
+      return genre.includes("adventure") ||
+             genre.includes("open-world") ||
+             genre.includes("sandbox") ||
+             genre.includes("survival");
+    }
+
+    if (selected === "Sports") {
+      return genre.includes("sports");
+    }
+
+    return genre === String(selected).toLowerCase();
+  }
+
+  function sortGames(list) {
+    const mode = apiSort ? apiSort.value : "popularity";
+    const copy = [...list];
+
+    if (mode === "release-date") {
+      return copy.sort((a, b) =>
+        String(b.release_date || "").localeCompare(String(a.release_date || ""))
+      );
+    }
+
+    if (mode === "alphabetical") {
+      return copy.sort((a, b) =>
+        String(a.title).localeCompare(String(b.title))
+      );
+    }
+
+    // FreeToGame's popularity order is preserved when possible.
+    return copy;
+  }
+
+  function renderApiGames() {
+    if (!gamesGrid) return;
+
+    const query = (searchInput?.value || "").trim().toLowerCase();
+
+    let filtered = apiGames.filter(game => {
+      const genreOk = genreMatches(game, selectedGenre);
+      const searchOk =
+        String(game.title).toLowerCase().includes(query) ||
+        String(game.genre).toLowerCase().includes(query) ||
+        String(game.developer).toLowerCase().includes(query);
+
+      return genreOk && searchOk;
+    });
+
+    filtered = sortGames(filtered);
+
+    gamesGrid.innerHTML = "";
+
+    if (!filtered.length) {
+      if (noResults) noResults.style.display = "none";
+
+      const empty = document.createElement("div");
+      empty.className = "api-empty";
+      empty.textContent = "😕 بازی‌ای با این مشخصات پیدا نشد.";
+      gamesGrid.appendChild(empty);
+      return;
+    }
+
+    if (noResults) noResults.style.display = "none";
+
+    filtered.forEach((game) => {
+      const index = apiGames.indexOf(game);
+      const card = document.createElement("article");
+      card.className = "game-card";
+      card.dataset.index = index;
+
+      const image = game.image
+        ? `<img class="game-image" src="${escapeHtml(game.image)}" alt="${escapeHtml(game.title)}" loading="lazy">`
+        : `<div class="game-icon">🎮</div>`;
+
+      card.innerHTML = `
+        <div class="game-image-wrap">
+          ${image}
+          <div class="game-image-overlay"></div>
+        </div>
+
+        <div class="game-card-body">
+          <h2>${escapeHtml(game.title)}</h2>
+
+          <div class="game-genre">
+            ${escapeHtml(game.genre)}
+          </div>
+
+          <p class="game-description">
+            ${escapeHtml(game.description)}
+          </p>
+
+          <div class="game-platform">
+            🎮 ${escapeHtml(game.platform)}
+          </div>
+
+          <div class="game-date">
+            ${game.release_date ? "📅 " + escapeHtml(game.release_date) : ""}
+          </div>
+
+          <div class="rating">
+            ⭐ ${escapeHtml(game.rating)}
+          </div>
+        </div>
+      `;
+
+      gamesGrid.appendChild(card);
+    });
+  }
+
+  async function loadGamesFromApi() {
+    setApiStatus("⏳ در حال دریافت بازی‌های واقعی از FreeToGame...");
+
+    try {
+      const response = await fetch(`${API_BASE}/games`);
+
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}`);
+      }
+
+      const data = await response.json();
+
+      if (!Array.isArray(data) || !data.length) {
+        throw new Error("empty response");
+      }
+
+      apiGames = data.map(normalizeGame);
+
+      // Keep the existing site's click/detail system compatible.
+      games.splice(0, games.length, ...apiGames);
+
+      apiLoaded = true;
+      setApiStatus(`✅ ${apiGames.length} بازی واقعی بارگذاری شد.`);
+      renderApiGames();
+
+      const gamesStat = document.querySelector(".stats .stat-number:nth-child(1)");
+      if (gamesStat) gamesStat.textContent = `${apiGames.length}+`;
+
+    } catch (error) {
+      console.error("FreeToGame API error:", error);
+
+      apiGames = fallbackGames;
+      games.splice(0, games.length, ...fallbackGames);
+
+      setApiStatus("⚠️ دریافت اطلاعات واقعی ممکن نشد؛ نسخهٔ پشتیبان GAMEHUB نمایش داده شد.");
+      renderApiGames();
+    }
+  }
+
+  async function openApiGame(index) {
+    const game = apiGames[index];
+    if (!game || !gamePage) return;
+
+    gameTitle.textContent = game.title;
+    gameGenre.textContent = game.genre;
+    gameRating.textContent = game.rating !== "—"
+      ? `⭐ ${game.rating}`
+      : "⭐ امتیاز ثبت نشده";
+
+    gameDescription.textContent = game.description;
+    infoGenre.textContent = game.genre;
+    infoRating.textContent = game.rating !== "—" ? game.rating : "ثبت نشده";
+
+    gameIcon.innerHTML = game.image
+      ? `<img src="${escapeHtml(game.image)}" alt="${escapeHtml(game.title)}">`
+      : "🎮";
+
+    // Replace the static status/type boxes with API metadata when possible.
+    const infoBoxes = gamePage.querySelectorAll(".game-info > div");
+    if (infoBoxes[2]) {
+      infoBoxes[2].querySelector("span").textContent =
+        game.release_date ? game.release_date : "فعال";
+    }
+    if (infoBoxes[3]) {
+      infoBoxes[3].querySelector("span").textContent =
+        game.platform || "PC";
+    }
+
+    let external = document.getElementById("gameExternalLink");
+
+    if (!external) {
+      external = document.createElement("a");
+      external.id = "gameExternalLink";
+      external.className = "game-external";
+      external.target = "_blank";
+      external.rel = "noopener noreferrer";
+      playButton.insertAdjacentElement("afterend", external);
+    }
+
+    if (game.game_url) {
+      external.href = game.game_url;
+      external.textContent = "🌐 مشاهده صفحه رسمی بازی";
+      external.style.display = "block";
+
+      playButton.onclick = () => {
+        window.open(game.game_url, "_blank", "noopener,noreferrer");
+      };
+    } else {
+      external.style.display = "none";
+      playButton.onclick = () => {
+        alert("لینک رسمی این بازی در API موجود نیست.");
+      };
+    }
+
+    gamePage.classList.add("active");
+    document.body.style.overflow = "hidden";
+
+    // Fetch richer details when an ID is available.
+    if (game.id) {
+      try {
+        const response = await fetch(`${API_BASE}/game?id=${encodeURIComponent(game.id)}`);
+
+        if (response.ok) {
+          const details = await response.json();
+
+          if (details.description) {
+            gameDescription.textContent = details.description;
+          }
+
+          if (details.developer && infoBoxes[2]) {
+            infoBoxes[2].querySelector("span").textContent = details.developer;
+            infoBoxes[2].querySelector("strong").textContent = "سازنده";
+          }
+
+          if (details.platform && infoBoxes[3]) {
+            infoBoxes[3].querySelector("span").textContent = details.platform;
+            infoBoxes[3].querySelector("strong").textContent = "پلتفرم";
+          }
+        }
+      } catch (detailError) {
+        console.warn("Game details error:", detailError);
+      }
+    }
+  }
+
+  // New click handler for API cards. The old handler still works as a fallback.
+  if (gamesGrid) {
+    gamesGrid.addEventListener("click", (event) => {
+      const card = event.target.closest(".game-card");
+      if (!card || !apiLoaded) return;
+
+      const index = Number(card.dataset.index);
+      if (!Number.isNaN(index)) {
+        openApiGame(index);
+      }
+    });
+  }
+
+  if (searchInput) {
+    searchInput.addEventListener("input", () => {
+      if (apiLoaded) renderApiGames();
+    });
+  }
+
+  document.querySelectorAll(".filter").forEach(button => {
+    button.addEventListener("click", () => {
+      if (apiLoaded) {
+        setTimeout(renderApiGames, 0);
+      }
+    });
+  });
+
+  if (apiSort) {
+    apiSort.addEventListener("change", () => {
+      if (apiLoaded) renderApiGames();
+    });
+  }
+
+  // Load automatically.
+  loadGamesFromApi();
+})();
 </script>
 
 </body>
