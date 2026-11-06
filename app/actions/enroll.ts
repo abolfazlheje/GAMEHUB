@@ -19,9 +19,11 @@ export async function enrollInCourse(formData: FormData) {
     if (error) redirect(`/courses/${course.slug}?error=order`);
     redirect(`/courses/${course.slug}?message=payment-pending`);
   }
-  const { error } = await supabase.from("enrollments").upsert({
+  const { data: existing } = await supabase.from("enrollments").select("id").eq("student_id", user.id).eq("course_id", course.id).maybeSingle();
+  if (existing) redirect("/dashboard?enrolled=1");
+  const { error } = await supabase.from("enrollments").insert({
     student_id: user.id, course_id: course.id, status: "active"
-  }, { onConflict: "student_id,course_id" });
+  });
   if (error) redirect(`/courses/${course.slug}?error=enroll`);
   redirect("/dashboard?enrolled=1");
 }
