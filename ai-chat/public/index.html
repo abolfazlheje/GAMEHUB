@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#0b0b14">
+  <meta name="description" content="گفت‌وگو با دستیار هوشمند GAMEHUB">
+  <title>دستیار هوشمند | GAMEHUB</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{color-scheme:dark;--bg:#0b0b14;--panel:#131321;--line:#ffffff16;--text:#f5f3ff;--muted:#9997ae;--purple:#9867ff;--cyan:#58d8ed}
+    *{box-sizing:border-box}body{margin:0;min-height:100vh;background:radial-gradient(ellipse at 80% 0%,#38205a55,transparent 38%),var(--bg);color:var(--text);font-family:Vazirmatn,sans-serif;display:flex;flex-direction:column}
+    .wrap{width:min(920px,calc(100% - 28px));margin:auto;flex:1;display:flex;flex-direction:column}
+    header{height:76px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line)}
+    .brand{font-size:20px;font-weight:900;letter-spacing:.5px}.brand b{color:var(--cyan)}.brand small{font-size:11px;color:var(--muted);font-weight:500;display:block;letter-spacing:0}
+    .back{font-size:13px;color:#d1c4ff;text-decoration:none;border:1px solid var(--line);border-radius:11px;padding:9px 13px}
+    main{flex:1;display:flex;flex-direction:column;padding:32px 0 18px;min-height:0}
+    .intro{text-align:center;margin:10px auto 24px}.avatar{width:58px;height:58px;border-radius:19px;margin:auto auto 12px;display:grid;place-items:center;font-size:27px;background:linear-gradient(135deg,#9661ff,#5267e9);box-shadow:0 10px 40px #8b5cff44}
+    h1{font-size:25px;margin:0 0 6px}.intro p{font-size:13px;color:var(--muted);margin:0}
+    .chat{flex:1;min-height:300px;max-height:55vh;overflow:auto;border:1px solid var(--line);border-radius:20px;background:#11111bcc;padding:18px;display:flex;flex-direction:column;gap:14px}
+    .msg{max-width:85%;padding:12px 15px;border-radius:16px;font-size:14px;line-height:2;white-space:pre-wrap;overflow-wrap:anywhere}.bot{align-self:flex-start;background:#202033;border:1px solid #ffffff10;border-top-right-radius:5px}.user{align-self:flex-end;background:linear-gradient(120deg,#7550c8,#4c58bd);border-top-left-radius:5px}
+    .typing{color:var(--muted);font-size:12px;padding:3px 7px}.suggestions{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:14px 0}.suggestions button{border:1px solid #9b6cff55;background:#9b6cff12;color:#d6c6ff;border-radius:30px;padding:8px 13px;font:inherit;font-size:12px;cursor:pointer}
+    .composer{border:1px solid #ffffff22;background:#171725;border-radius:17px;padding:9px;display:flex;align-items:end;gap:9px}.composer textarea{flex:1;resize:none;max-height:120px;min-height:44px;border:0;outline:0;background:transparent;color:var(--text);font:inherit;font-size:14px;padding:10px}.composer textarea::placeholder{color:#77758b}
+    .send{width:44px;height:44px;border:0;border-radius:13px;background:linear-gradient(135deg,#9867ff,#5968e9);color:white;font-size:20px;cursor:pointer}.send:disabled{opacity:.45;cursor:not-allowed}
+    .notice{text-align:center;color:#77758b;font-size:11px;line-height:1.9;margin:12px 5px 18px}footer{border-top:1px solid var(--line);padding:15px;text-align:center;color:#77758b;font-size:11px}
+    @media(max-width:600px){header{height:66px}.brand{font-size:17px}main{padding-top:20px}.chat{max-height:52vh;padding:12px}.msg{max-width:94%;font-size:13px}.intro{margin-bottom:18px}h1{font-size:22px}}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header><div class="brand">GAME<b>HUB</b><small>دستیار هوشمند</small></div><a class="back" href="../">بازگشت به GAMEHUB ←</a></header>
+    <main>
+      <section class="intro"><div class="avatar">✦</div><h1>سلام! چطور می‌تونم کمکت کنم؟</h1><p>من دستیار هوشمند GAMEHUB هستم؛ سوالت رو بپرس.</p></section>
+      <section class="chat" id="chat" aria-live="polite"><div class="msg bot">سلام! 👋 خوش اومدی. درباره بازی‌ها، ایده‌ها یا هر موضوع عمومی دوست داری بپرس.</div></section>
+      <div class="suggestions" id="suggestions"><button type="button">چند بازی ماجراجویی معرفی کن</button><button type="button">برای ساخت بازی از کجا شروع کنم؟</button><button type="button">یک ایده خلاقانه بده</button></div>
+      <form class="composer" id="form"><textarea id="message" rows="1" maxlength="4000" placeholder="پیامت رو اینجا بنویس..." aria-label="متن پیام"></textarea><button class="send" id="send" type="submit" aria-label="ارسال پیام">➤</button></form>
+      <p class="notice">پاسخ‌های هوش مصنوعی ممکن است اشتباه باشند. اطلاعات شخصی، رمز عبور یا اطلاعات محرمانه را وارد نکن.</p>
+    </main>
+  </div>
+  <footer>GAMEHUB AI · ساخته‌شده برای تجربه‌ای بهتر ✦</footer>
+  <script>
+    const form=document.getElementById("form"),input=document.getElementById("message"),chat=document.getElementById("chat"),send=document.getElementById("send"),suggestions=document.getElementById("suggestions");
+    function addMessage(text,kind){const node=document.createElement("div");node.className="msg "+kind;node.textContent=text;chat.appendChild(node);chat.scrollTop=chat.scrollHeight;return node}
+    async function ask(text){const message=text.trim();if(!message||send.disabled)return;addMessage(message,"user");input.value="";input.style.height="auto";suggestions.hidden=true;send.disabled=true;const pending=addMessage("در حال فکر کردن…","bot");pending.classList.add("typing");
+      try{const response=await fetch("/api/chat",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({message})});const data=await response.json();pending.remove();if(!response.ok)throw new Error(data.error||"در دریافت پاسخ مشکلی پیش آمد.");addMessage(data.answer,"bot")}
+      catch(error){pending.remove();addMessage(error.message||"اتصال برقرار نشد. کمی بعد دوباره تلاش کن.","bot")}
+      finally{send.disabled=false;input.focus()}}
+    form.addEventListener("submit",event=>{event.preventDefault();ask(input.value)});
+    input.addEventListener("input",()=>{input.style.height="auto";input.style.height=Math.min(input.scrollHeight,120)+"px"});
+    input.addEventListener("keydown",event=>{if(event.key==="Enter"&&!event.shiftKey){event.preventDefault();form.requestSubmit()}});
+    suggestions.addEventListener("click",event=>{if(event.target.tagName==="BUTTON")ask(event.target.textContent)});
+  </script>
+</body>
+</html>
