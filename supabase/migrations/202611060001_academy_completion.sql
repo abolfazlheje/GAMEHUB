@@ -67,3 +67,39 @@ on conflict (slug) do nothing;
 
 -- Assign the first admin manually using the Supabase SQL editor after reviewing
 -- the intended account: update public.profiles set role='admin' where id='AUTH_USER_UUID';
+
+-- Use a SECURITY DEFINER helper to avoid recursive profile RLS checks.
+create or replace function public.is_admin()
+returns boolean language sql stable security definer set search_path = public as $$
+  select exists(select 1 from public.profiles where id = auth.uid() and role = 'admin');
+$$;
+drop policy if exists "Admins can manage courses" on public.courses;
+drop policy if exists "Admins can manage lessons" on public.lessons;
+drop policy if exists "Admins can view all profiles" on public.profiles;
+drop policy if exists "Admins can view all enrollments" on public.enrollments;
+drop policy if exists "Admins can view all orders" on public.orders;
+
+create policy "Admins can manage courses" on public.courses for all to authenticated
+using (public.is_admin()) with check (public.is_admin());
+create policy "Admins can manage lessons" on public.lessons for all to authenticated
+using (public.is_admin()) with check (public.is_admin());
+create policy "Admins can view all profiles" on public.profiles for select to authenticated
+using (public.is_admin());
+create policy "Admins can view all enrollments" on public.enrollments for select to authenticated
+using (public.is_admin());
+create policy "Admins can view all orders" on public.orders for select to authenticated
+using (public.is_admin());
+
+create policy "Students can enroll in free published courses"
+on public.enrollments for insert to authenticated
+with check (
+  student_id = auth.uid() and status = 'active' and
+  exists(select 1 from public.courses c where c.id = course_id and c.published = true and c.price_irr = 0)
+);
+
+create policy "Students can create pending orders for published courses"
+on public.orders for insert to authenticated
+with check (
+  student_id = auth.uid() and status = 'pending' and
+  exists(select 1 from public.courses c where c.id = course_id and c.published = true and c.price_irr = amount_irr)
+);
